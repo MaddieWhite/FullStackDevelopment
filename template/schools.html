@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <title>Schools</title>
@@ -23,7 +23,7 @@
 
 	<header class="header trans_400">
 		<div class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
-			<div class="logo"><a href="#"><span>b</span>Host</a></div>
+			<div class="logo"><a href="#"><span>sailing</span>Scores</a></div>
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-10 offset-lg-2">
@@ -31,7 +31,7 @@
 							<ul class="d-flex flex-row align-items-center justify-content-start">
 								<li><a href="index.html">Home</a></li>
 								<li class="active"><a href="about.html">Schools</a></li>
-								<li class="active"><a href="test.html">Sailor</a></li>
+								<li><a href="test.html">Sailor</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -74,30 +74,7 @@
 					<div class="home_content">
 						<div class="home_image"><img src="images/about_page.png" alt=""></div>
 						<div class="home_title">Schools</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="domain_search_container">
-			<div class="container">
-				<div class="row">
-					<div class="col">
-						<div class="domain_search">
-							<div class="domain_search_background"></div>
-							<div class="domain_search_overlay"></div>
-							<form action="#" class="domain_search_form" id="domain_search_form">
-								<input type="text" class="domain_search_input" placeholder="Your domain name" required="required">
-								<div class="domain_search_dropdown d-flex flex-row align-items-center justify-content-center">
-									<div class="domain_search_selected">.com</div>
-									<ul>
-										<li>.com</li>
-										<li>.io</li>
-										<li>.net</li>
-									</ul>
-								</div>
-								<button class="domain_search_button">search</button>
-							</form>
-						</div>
+						<div>Below is a list of schools that you can select and find their respective sailors.</div>
 					</div>
 				</div>
 			</div>
@@ -106,66 +83,42 @@
 
 	<!-- Milestones -->
 
-	<div class="milestones">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="milestones_container d-flex flex-lg-row flex-column align-items-center justify-content-lg-between justify-content-start">
-
-						<!-- Milestone Item -->
-						<div class="milestone d-flex flex-row align-items-center justify-content-start">
-							<div class="milestone_icon"><img src="images/icon_5.svg" alt="https://www.flaticon.com/authors/srip"></div>
-							<div class="milestone_content">
-								<div class="milestone_counter" data-end-value="12557">0</div>
-								<div class="milestone_text">Websites</div>
-							</div>
-						</div>
-
-						<!-- Milestone Item -->
-						<div class="milestone d-flex flex-row align-items-center justify-content-start">
-							<div class="milestone_icon"><img src="images/icon_6.svg" alt="https://www.flaticon.com/authors/srip"></div>
-							<div class="milestone_content">
-								<div class="milestone_counter" data-end-value="100000" data-sign-before="+">0</div>
-								<div class="milestone_text">Websites</div>
-							</div>
-						</div>
-
-						<!-- Milestone Item -->
-						<div class="milestone d-flex flex-row align-items-center justify-content-start">
-							<div class="milestone_icon"><img src="images/icon_7.svg" alt="https://www.flaticon.com/authors/srip"></div>
-							<div class="milestone_content">
-								<div class="milestone_counter" data-end-value="14610">0</div>
-								<div class="milestone_text">Websites</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- About -->
 
 	<div class="about">
 		<div class="container">
 			<div class="row row-lg-eq-height">
 
-				<!-- About Image -->
-				<div class="col-lg-6 order-lg-1 order-2">
-					<div class="about_image d-flex flex-column align-items-center justify-content-center">
-						<img src="images/servers.png" alt="">
-					</div>
-				</div>
+
+				<script>
+				function showhide(id) {
+				  var x = document.getElementById(id);
+				  if (x.style.display === "none") {
+				    x.style.display = "block";
+				  } else {
+				    x.style.display = "none";
+				  }
+				}
+				</script>
 
 				<!-- About Content -->
 				<div class="col-lg-6 order-lg-2 order-1">
 					<div class="about_content">
-						<div class="section_title"><h2>What we do @ BHost</h2></div>
+						<div class="section_title"><h2>Schools by division</h2></div>
 						<div class="about_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris velit arcu, scelerisque dignissim massa quis, mattis facilisis erat. Aliquam erat volutpat. Sed efficitur diam ut interdum ultricies. In a leo vel dolor tempor feugiat. Cras accumsan faucibus magna a imperdiet. Donec mi neque, pretium eu quam at, facilisis venenatis tortor. Suspendisse potenti.</p>
+							<p>Below click on a district to see a list of schools </p>
 						</div>
-						<div class="button about_button"><a href="#">read more</a></div>
+
+
+						<button onclick="showhide('maisalist')"> MASIA Schools </button>
+						<div id="maisalist" style="display:none"><a href = "#">St. Mary's <br> Navy <br> Georgetown <br> George Washington <br> Hobart and William Smith <br> Cornell</a></div>
+						<br>
+						<button onclick="showhide('neisalist')"> NEISA Schools </button>
+						<div id="neisalist" style="display:none"><a href = "#">Yale <br> Harvard <br> MIT <br> Roger Williams <br> Boston University <br> Boston College</a></div>
+						<br>
+						<button onclick="showhide('saisalist')"> SAISA Schools </button>
+						<div id="saisalist" style="display:none"><a href = "#">Eckerd <br> College of Charleston <br> Texas A&M Galveston</a></div>
+
 					</div>
 				</div>
 
@@ -173,237 +126,47 @@
 		</div>
 	</div>
 
-	<!-- Video -->
 
-	<div class="video">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="video_content">
-						<div class="video_container_outer">
-							<div class="video_overlay">
-								<div class="video_text">Life at BHost - A day at our company</div>
-							</div>
-							<div class="video_container">
-								<video id="vid1" class="video-js vjs-default-skin" controls width="100%" height="100%" data-setup='{ "poster": "images/video.jpg", "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://youtu.be/IV3ueyrp5M4"}], "youtube": { "iv_load_policy": 1 } }'>
-								</video>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Team -->
-
-	<div class="team">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="section_title_container text-center">
-						<div class="section_title"><h2>The Team</h2></div>
-						<div class="team_text">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris velit arcu, scelerisque dignissim massa quis, mattis facilisis erat. Aliquam erat volutpat. Sed efficitur diam ut interdum ultricies.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row team_row">
-
-				<!-- Team Item -->
-				<div class="col-xl-3 col-md-6">
-					<div class="team_item">
-						<div class="team_image">
-							<img src="images/team_1.jpg" alt="https://unsplash.com/@michaeldam">
-							<div class="team_overlay trans_400"></div>
-							<div class="team_social">
-								<ul class="d-flex flex-row align-items-center justify-content-between">
-									<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="team_content text-center">
-							<div class="team_name">Julia Williams</div>
-							<div class="team_title">Team Manager</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Team Item -->
-				<div class="col-xl-3 col-md-6">
-					<div class="team_item">
-						<div class="team_image">
-							<img src="images/team_2.jpg" alt="https://unsplash.com/@stairhopper">
-							<div class="team_overlay trans_400"></div>
-							<div class="team_social">
-								<ul class="d-flex flex-row align-items-center justify-content-between">
-									<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="team_content text-center">
-							<div class="team_name">Michael Smith</div>
-							<div class="team_title">Manager</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Team Item -->
-				<div class="col-xl-3 col-md-6">
-					<div class="team_item">
-						<div class="team_image">
-							<img src="images/team_3.jpg" alt="https://unsplash.com/@chrisjoelcampbell">
-							<div class="team_overlay trans_400"></div>
-							<div class="team_social">
-								<ul class="d-flex flex-row align-items-center justify-content-between">
-									<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="team_content text-center">
-							<div class="team_name">Jessica Brown</div>
-							<div class="team_title">Project Manager</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Team Item -->
-				<div class="col-xl-3 col-md-6">
-					<div class="team_item">
-						<div class="team_image">
-							<img src="images/team_4.jpg" alt="https://unsplash.com/@brookecagle">
-							<div class="team_overlay trans_400"></div>
-							<div class="team_social">
-								<ul class="d-flex flex-row align-items-center justify-content-between">
-									<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-									<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="team_content text-center">
-							<div class="team_name">Jack Parker</div>
-							<div class="team_title">Developer</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-	<!-- Footer -->
-
-	<footer class="footer">
-		<div class="footer_phone d-flex flex-row align-items-center justify-content-sm-end justify-content-center">
-			<div>Need Help? Call Us 24/7</div>
-			<div class="d-flex flex-row align-items-center justify-content-start">
-				<i class="fa fa-phone" aria-hidden="true"></i>
-				<div>652-345 3222 11</div>
-			</div>
-		</div>
-		<div class="footer_content">
+		<div class="milestones">
 			<div class="container">
-				<div class="row footer_row">
+				<div class="row">
+					<div class="col">
+						<div class="milestones_container d-flex flex-lg-row flex-column align-items-center justify-content-lg-between justify-content-start">
 
-					<!-- Footer Column -->
-					<div class="col-xl-3 col-md-6">
-						<div class="footer_title">Hosting Packages</div>
-						<div class="footer_list">
-							<ul>
-								<li><a href="#">Cloud Hosting</a></li>
-								<li><a href="#">Web Hosting</a></li>
-								<li><a href="#">Reseller Hosting</a></li>
-								<li><a href="#">VPS Hosting</a></li>
-								<li><a href="#">Dedicated Servers</a></li>
-								<li><a href="#">Windows Hosting</a></li>
-								<li><a href="#">Linux Servers</a></li>
-							</ul>
-						</div>
-					</div>
 
-					<!-- Footer Column -->
-					<div class="col-xl-3 col-md-6">
-						<div class="footer_title">Our Services</div>
-						<div class="footer_list">
-							<ul>
-								<li><a href="#">Web Design</a></li>
-								<li><a href="#">Logo Design</a></li>
-								<li><a href="#">Domains Register</a></li>
-								<li><a href="#">Search Advertising</a></li>
-								<li><a href="#">Email Marketing</a></li>
-							</ul>
-						</div>
-					</div>
 
-					<!-- Footer Column -->
-					<div class="col-xl-3 col-md-6">
-						<div class="footer_title">Useful Links</div>
-						<div class="footer_list">
-							<ul>
-								<li><a href="#">About Us</a></li>
-								<li><a href="#">Testimonials</a></li>
-								<li><a href="#">Services</a></li>
-								<li><a href="#">News</a></li>
-								<li><a href="#">Contact</a></li>
-							</ul>
-						</div>
-					</div>
+							<!-- Milestone Item -->
+							<div class="milestone d-flex flex-row align-items-center justify-content-start">
+								<!-- <div class="milestone_icon"><img src="images/icon_6.svg" alt="https://www.flaticon.com/authors/srip"></div> -->
+								<div class="milestone_content">
+									<div class="milestone_counter" data-end-value="123">0</div>
+									<div class="milestone_text">Schools Indexed</div>
+								</div>
+							</div>
 
-					<!-- Footer Column -->
-					<div class="col-xl-3 col-md-6">
-						<div class="logo footer_logo"><a href="#"><span>b</span>Host</a></div>
-						<div class="footer_info">
-							<ul>
-								<li class="d-flex flex-row align-items-start justify-content-start">
-									<div><div>Address</div></div>
-									<div>1481 Creekside Lane Avila Beach, CA 931</div>
-								</li>
-								<li class="d-flex flex-row align-items-start justify-content-start">
-									<div><div>Phone</div></div>
-									<div>+53 345 7953 32453</div>
-								</li>
-								<li class="d-flex flex-row align-items-start justify-content-start">
-									<div><div>E-mail</div></div>
-									<div>yourmail@gmail.com</div>
-								</li>
-							</ul>
-						</div>
-						<div class="cards">
-							<ul class="d-flex flex-row align-items-start justify-content-start flex-wrap">
-								<li><a href="#"><img src="images/card_1.png" alt=""></a></li>
-								<li><a href="#"><img src="images/card_2.png" alt=""></a></li>
-								<li><a href="#"><img src="images/card_3.png" alt=""></a></li>
-								<li><a href="#"><img src="images/card_4.png" alt=""></a></li>
-								<li><a href="#"><img src="images/card_5.png" alt=""></a></li>
-							</ul>
-						</div>
-						<div class="social footer_social">
-							<ul class="d-flex flex-row align-items-center justify-content-start">
-								<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-							</ul>
+							<div class="milestone d-flex flex-row align-items-center justify-content-start">
+								<!-- <div class="milestone_icon"><img src="images/icon_5.svg" alt="https://www.flaticon.com/authors/srip"></div> -->
+								<div class="milestone_content">
+									<div class="milestone_counter" data-end-value="722">0</div>
+									<div class="milestone_text">Sailors Indexed</div>
+								</div>
+							</div>
+
+							<div class="milestone d-flex flex-row align-items-center justify-content-start">
+								<!-- <div class="milestone_icon"><img src="images/icon_5.svg" alt="https://www.flaticon.com/authors/srip"></div> -->
+								<div class="milestone_content">
+									<div class="milestone_counter" data-end-value="13,231">0</div>
+									<div class="milestone_text">Regattas Indexed</div>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="copyright_bar text-center"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-	</footer>
-</div>
+
+
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap-4.1.2/popper.js"></script>
