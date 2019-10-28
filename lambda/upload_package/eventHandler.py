@@ -120,7 +120,7 @@ def sailor_scrape(uuid):
     sailP = None
     averageF = None
 
-    #Before I had tons of output statements, now it's just this.  It removes any datapoints not yet defined when we call it and pushes it to the database.
+    #Before I had tons of output statements, now it's just this.  It removes any datapoints not yet defined when we call it and pushes to database.
     def output():
         dict = {
         'sailor-uuid':uuid,
