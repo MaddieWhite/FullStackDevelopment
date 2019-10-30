@@ -54,6 +54,7 @@ div
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+        color: #000080;
 }
 ul
 {
@@ -130,7 +131,7 @@ h2{font-size: 36px;}
 h3{font-size: 24px;}
 h4{font-size: 18px;}
 h5{font-size: 14px;}
-h1, h2, h3, h4, h5, h6
+h1, h2, h3, h4, h6
 {
 	font-family: 'Montserrat', sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -140,6 +141,18 @@ h1, h2, h3, h4, h5, h6
 	color: #2c2c2c;
 	font-weight: 600;
 }
+
+h5
+{
+	font-family: 'Montserrat', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
+	text-shadow: rgba(0,0,0,.01) 0 0 1px;
+	line-height: 1.2;
+	color: #FFFFFF;
+	font-weight: 600;
+}
+
 h1::selection, 
 h2::selection, 
 h3::selection, 
@@ -370,7 +383,7 @@ section
 }
 .logo a span
 {
-	color: #416ecc;
+	color: #FFFFFF;
 	text-transform: uppercase;
 }
 .main_nav
@@ -404,28 +417,7 @@ section
 	transform: translateY(-50%);
 	right: 69px;
 }
-.phone
-{
-	height: 43px;
-	padding-left: 16px;
-	padding-right: 20px;
-	border-radius: 22px;
-	background: linear-gradient(to right, #487fee, #b632fa);
-}
-.phone > div
-{
-	font-size: 16px;
-	font-weight: 500;
-	color: #FFFFFF;
-	white-space: nowrap;
-}
-.phone i
-{
-	display: block;
-	color: #FFFFFF;
-	font-size: 24px;
-	margin-right: 7px;
-}
+
 .header_links
 {
 	margin-right: 60px;
@@ -438,7 +430,7 @@ section
 {
 	font-size: 14px;
 	font-weight: 600;
-	color: rgba(255,255,255,0.36);
+	color: rgba(245,245,245,0.36);
 }
 .header_links ul li a:hover
 {
@@ -1114,39 +1106,6 @@ section
 	display: block;
 	position: relative;
 	width: 100%;
-}
-.footer_phone
-{
-	position: absolute;
-	left: 0;
-	top: -44px;
-	height: 104px;
-	width: 816px;
-	border-top-right-radius: 57px;
-	border-bottom-right-radius: 57px;
-	background: linear-gradient(to right, #487fee, #b632fa);
-	z-index: 1;
-	padding-right: 56px;
-}
-.footer_phone > div:first-of-type
-{
-	font-size: 18px;
-	font-weight: 600;
-	color: #FFFFFF;
-	margin-right: 46px;
-	line-height: 0.75;
-}
-.footer_phone > div:last-of-type
-{
-	font-size: 36px;
-	font-weight: 600;
-	color: #FFFFFF;
-	line-height: 0.75;
-}
-.footer_phone > div:last-of-type i
-{
-	font-size: 31px;
-	margin-right: 20px;
 }
 .footer_content
 {
