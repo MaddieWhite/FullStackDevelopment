@@ -407,11 +407,11 @@ section
 {
 	font-size: 14px;
 	font-weight: 600;
-	color: rgba(245,245,245,0.36);
+	color:  #FFFFFF;
 }
 .header_links ul li a:hover
 {
-	color: #FFFFFF;
+	color: rgba(245,245,245,0.36);
 }
 .hamburger
 {
@@ -490,11 +490,11 @@ section
 .menu_nav ul li a
 {
 	font-size: 24px;
-	color: #92a4b8;
+	color: #FFFFFF;
 }
 .menu_nav ul li a:hover
 {
-	color: #FFFFFF;
+	color: #92a4b8;
 }
 .menu_phone
 {
