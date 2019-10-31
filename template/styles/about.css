@@ -513,11 +513,11 @@ section
 .menu_nav ul li a
 {
 	font-size: 24px;
-	color: #92a4b8;
+	color: #FFFFFF;
 }
 .menu_nav ul li a:hover
 {
-	color: #FFFFFF;
+	color: #92a4b8;
 }
 .menu_phone
 {
