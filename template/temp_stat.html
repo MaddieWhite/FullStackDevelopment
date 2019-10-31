@@ -1,0 +1,109 @@
+<!--
+Spinner code from https://www.w3schools.com/howto/howto_css_loader.asp
+Ajax code from https://www.freecodecamp.org/news/here-is-the-most-popular-ways-to-make-an-http-request-in-javascript-954ce8c95aaa/
+CORS help from https://serverless.com/blog/cors-api-gateway-survival-guide/
+URL Params from https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
+
+-->
+<!DOCTYPE html>
+<html>
+<!-- This is the loading button -->
+<div class="loader" id="loader"></div>
+
+<!-- Everything under this gets hidden until page load. -->
+<div id='hidden' style="display:none">
+
+  <head>
+    <title id=title>Loading...</title>
+    <link rel="stylesheet" type="text/css" href="./css/statsheet.css">
+  </head>
+
+  <center><b id=name style="font-size:large"></b></center>
+  <b>Sailor Stats:</b>
+
+  <table class="schools-table">
+    <tr>
+      <td><b>Regatta Count:</b>
+        <div id=regatta-count>This should be changed.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><b>School:</b>
+        <div id=school>This should be changed.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><b>Average Finish:</b>
+        <div id=average-finish>This should be changed.</div>
+      </td>
+    </tr>
+    <tr>
+      <td><b>Percentage of Regattas Sailed In</b>
+        <div id=sail-p>This should be changed.</div>
+      </td>
+    </tr>
+  </table>
+
+  <b>Regatta List:</b>
+
+  <table class="schools-table" id="table">
+  </table>
+</div>
+
+<script type="text/javascript">
+  //This gets the params from the url, ?uuid=thomas-walker&op=si`
+  params = {};
+  location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(s, k, v) {
+    params[k] = v
+  })
+  //This is how we make the api request.
+  const Http = new XMLHttpRequest();
+  //If they give no params, default to someone.
+  if (params['uuid'] == undefined && params['op'] == undefined) {
+    params['uuid'] = "thomas-walker"
+    params['op'] = 'si'
+  }
+  //If they just give an id, assume its a single person.
+  if (params['uuid'] != undefined && params['op'] == undefined) {
+    params['op'] = 'si'
+  }
+  const url = 'https://teqr5x3h2h.execute-api.us-east-1.amazonaws.com/dev/lambdarequest?' + 'uuid=' + params['uuid'] + '&op=' + params['op'];
+  Http.open("GET", url);
+  Http.send();
+  run = 0;
+  Http.onreadystatechange = (e) => {
+    if (Http.status == 200 && Http.readyState == 4) {
+      console.log(run)
+      //Parse the lambda response
+      json = JSON.parse(Http.responseText);
+      //Update all the fields
+      document.getElementById('regatta-count').innerHTML = json["regatta-count"];
+      document.getElementById('school').innerHTML = json["home"];
+      document.getElementById('average-finish').innerHTML = json["average-finish"];
+      document.getElementById('sail-p').innerHTML = json["sail-percentage"];
+      document.getElementById('name').innerHTML = json["sailor-uuid"];
+      document.getElementById('title').innerHTML = json["sailor-uuid"];
+
+
+      //Add tables bodies for all regattas
+      for (regatta in json['regattas']) {
+        //Regex to clean regatta name
+        j = json['regattas'][regatta]
+        re = /[a-zA-Z]\d\d-(.*)/
+        regatta1 = re.exec(regatta)[1]
+        newElement = document.createElement('tr');
+        newElement.innerHTML = '<td><b>' + regatta1 + "</b> at " + j['location'] + ' as ' + j['position'] + " finishing in " + j['finish'] + '</td>';
+        el = document.getElementById("table");
+        el.appendChild(newElement);
+      }
+      //Once all content has been loaded we hide the loading icon and show the actual screen
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("hidden").style.display = "block";
+      run++;
+    } else {
+      console.log("Not ready yet.")
+    }
+  }
+</script>
+
+</html>
