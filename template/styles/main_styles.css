@@ -361,7 +361,7 @@ section
 }
 .logo a span
 {
-	color: #416ecc;
+	color: #FFFFFF;
 	text-transform: uppercase;
 }
 .main_nav
@@ -395,28 +395,6 @@ section
 	transform: translateY(-50%);
 	right: 69px;
 }
-.phone
-{
-	height: 43px;
-	padding-left: 16px;
-	padding-right: 20px;
-	border-radius: 22px;
-	background: linear-gradient(to right, #487fee, #b632fa);
-}
-.phone > div
-{
-	font-size: 16px;
-	font-weight: 500;
-	color: #FFFFFF;
-	white-space: nowrap;
-}
-.phone i
-{
-	display: block;
-	color: #FFFFFF;
-	font-size: 24px;
-	margin-right: 7px;
-}
 .header_links
 {
 	margin-right: 60px;
@@ -429,11 +407,11 @@ section
 {
 	font-size: 14px;
 	font-weight: 600;
-	color: rgba(255,255,255,0.36);
+	color:  #FFFFFF;
 }
 .header_links ul li a:hover
 {
-	color: #FFFFFF;
+	color: rgba(245,245,245,0.36);
 }
 .hamburger
 {
@@ -512,11 +490,11 @@ section
 .menu_nav ul li a
 {
 	font-size: 24px;
-	color: #92a4b8;
+	color: #FFFFFF;
 }
 .menu_nav ul li a:hover
 {
-	color: #FFFFFF;
+	color: #92a4b8;
 }
 .menu_phone
 {
