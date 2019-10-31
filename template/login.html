@@ -80,8 +80,11 @@
 			</div>
 		</div>
 	</div>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
 
-      <div id="noCognitoMessage" class="configMessage" style="display: none;">
+        <div id="noCognitoMessage" class="configMessage" style="display: none;">
             <div class="backdrop"></div>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -93,74 +96,70 @@
             </div>
         </div>
 
-        <header>
-          <img src="images/logo.png">
-        </header>
-
-	<!-- Login -->
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-30">
+				 <form id="signinForm">
 				<form class="login100-form validate-form">
-					<span class="login100-form-title p-b-33">
-						Login
-					</span>
+					
+			<span class="login100-form-title p-b-33">
+				Login
+			</span>
+			
+			<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+              <input class="input100" type="email" id="emailInputSignin" placeholder="Email" required>
+			<span class="focus-input100-1"></span>
+			<span class="focus-input100-2"></span>
+		</div>
+		
+			<div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
+              <input class="input100"type="password" id="passwordInputSignin" placeholder="Password" pattern=".*" required>
+				<span class="focus-input100-1"></span>
+				<span class="focus-input100-2"></span>
+			</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="email" placeholder="Email">
-						<span class="focus-input100-1"></span>
-						<span class="focus-input100-2"></span>
-					</div>
+              <div class="container-login100-form-btn m-t-20">
+				  <button class="login100-form-btn">
+			      Sign in
+				</button>
+			</div>
+			
+			<div class="text-center p-t-45 p-b-4">
+				<span class="txt1">
+					Forgot
+				</span>
 
-					<div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Password">
-						<span class="focus-input100-1"></span>
-						<span class="focus-input100-2"></span>
-					</div>
+				<a href="forgotpass.html" class="txt2 hov1">
+					Password?
+				</a>
+			</div>
 
-					<div class="container-login100-form-btn m-t-20">
-						<button class="login100-form-btn">
-							Sign in
-						</button>
-					</div>
+			<div class="text-center">
+				<span class="txt1">
+					Create an account?
+				</span>
 
-					<div class="text-center p-t-45 p-b-4">
-						<span class="txt1">
-							Forgot
-						</span>
-
-						<a href="#" class="txt2 hov1">
-							Username / Password?
-						</a>
-					</div>
-
-					<div class="text-center">
-						<span class="txt1">
-							Create an account?
-						</span>
-
-						<a href="register.html" class="txt2 hov1">
-							Sign up
-						</a>
-					</div>
-				</form>
+				<a href="register.html" class="txt2 hov1">
+					Sign up
+				</a>
+			</div>
+            </form>
+							<!--/form-->
+			</form>
+			</div>
 			</div>
 		</div>
-	</div>
+			
+							
+        </section>
+						
+		
 
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="styles/bootstrap-4.1.2/popper.js"></script>
-	<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
-	<script src="plugins/greensock/TweenMax.min.js"></script>
-	<script src="plugins/greensock/TimelineMax.min.js"></script>
-	<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
-	<script src="plugins/greensock/animation.gsap.min.js"></script>
-	<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
-	<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-	<script src="plugins/easing/easing.js"></script>
-	<script src="plugins/progressbar/progressbar.min.js"></script>
-	<script src="plugins/parallax-js-master/parallax.min.js"></script>
-	<script src="js/custom.js"></script>
-
-</body>
+        <script src="js/vendor/jquery-3.1.0.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/vendor/aws-cognito-sdk.min.js"></script>
+        <script src="js/vendor/amazon-cognito-identity.min.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/cognito-auth.js"></script>
+    </body>
 </html>
