@@ -496,17 +496,6 @@ section
 {
 	color: #92a4b8;
 }
-.menu_phone
-{
-	position: absolute;
-	left: 50%;
-	-webkit-transform: translateX(-50%);
-	-moz-transform: translateX(-50%);
-	-ms-transform: translateX(-50%);
-	-o-transform: translateX(-50%);
-	transform: translateX(-50%);
-	bottom: 30px;
-}
 
 /*********************************
 5. Home
