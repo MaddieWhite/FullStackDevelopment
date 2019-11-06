@@ -14,17 +14,22 @@
 <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 
-
-<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="css/util.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+
+
+	<!-- Javascript SDKs-->
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> 
+	<script src="js/amazon-cognito-auth.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+	<script src="js/amazon-cognito-identity.min.js"></script>   
+	<script src="js/config.js"></script>
 </head>
 
 <body>
-
 <div class="super_container">
 
 	<!-- Header -->
@@ -78,26 +83,11 @@
 			</div>
 		</div>
 	</div>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-
-        <div id="noCognitoMessage" class="configMessage" style="display: none;">
-            <div class="backdrop"></div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">No Cognito User Pool Configured</h3>
-                </div>
-                <div class="panel-body">
-                    <p>There is no user pool configured in <a href="/js/config.js">/js/config.js</a>. You'll configure this in Module 2 of the workshop.</p>
-                </div>
-            </div>
-        </div>
-
+  
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-30">
-				 <form id="signinForm">
+				 <!--form id="signinForm"-->
 				<form class="login100-form validate-form">
 					
 			<span class="login100-form-title p-b-33">
@@ -105,20 +95,20 @@
 			</span>
 			
 			<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-              <input class="input100" type="email" id="emailInputSignin" placeholder="Email" required>
+              <input class="input100" type="text" id="inputUsername" placeholder="Email address" name="username" required autofocus>
 			<span class="focus-input100-1"></span>
 			<span class="focus-input100-2"></span>
 		</div>
 		
 			<div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
-              <input class="input100"type="password" id="passwordInputSignin" placeholder="Password" pattern=".*" required>
+              <input class="input100" type="password" id="inputPassword" placeholder="Password" name="password" required>
 				<span class="focus-input100-1"></span>
 				<span class="focus-input100-2"></span>
 			</div>
 
               <div class="container-login100-form-btn m-t-20">
-				  <button class="login100-form-btn">
-			      Sign in
+				  <button class="login100-form-btn" type="button" onclick="signInButton()">
+			      	Sign in
 				</button>
 			</div>
 			
@@ -127,7 +117,7 @@
 					Forgot
 				</span>
 
-				<a href="forgotpass.html" class="txt2 hov1">
+				<a href="forgotpass.html" class="txt2 hov1" onclick="forgotpasswordbutton()">
 					Password?
 				</a>
 			</div>
@@ -142,16 +132,69 @@
 				</a>
 			</div>
             </form>
-							<!--/form-->
-			</form>
 			</div>
 			</div>
-		</div>
-			
-							
-        </section>
+		</div>					
+        </section> 
+		
+	
+	<script>
+
+	  function signInButton() {
+    
+		var authenticationData = {
+	        Username : document.getElementById("inputUsername").value,
+	        Password : document.getElementById("inputPassword").value,
+	    };
+	
+	    var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+    
+		var poolData = {
+	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
+	        ClientId : '352g7qe1vat8ok0631n096c8gt',//_config.cognito.clientId, // Your client id here
+	    };
+	
+	    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+	
+	    var userData = {
+	        Username : document.getElementById("inputUsername").value,
+	        Pool : userPool,
+	    };
+	
+	    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    
+		cognitoUser.authenticateUser(authenticationDetails, {
+	        onSuccess: function (result) {
+				var accessToken = result.getAccessToken().getJwtToken();
+				console.log(accessToken);	
+				window.open("file:///Users/juliagoyco/Documents/GitHub/FullStackDevelopment1/template/userspage.html");
+	        },
+
+	        onFailure: function(err) {
+	            alert(err.message || JSON.stringify(err));
+				
+			 },
+			newPasswordRequired: function(userAttributes, requiredAttributes) {
+			               // User was signed up by an admin and must provide new 
+			               // password and required attributes, if any, to complete 
+			               // authentication.
+
+			               // userAttributes: object, which is the user's current profile. It will list all attributes that are associated with the user. 
+			               // Required attributes according to schema, which don’t have any values yet, will have blank values.
+			               // requiredAttributes: list of attributes that must be set by the user along with new password to complete the sign-in.
+
+            
+			               // Get these details and call 
+			               // newPassword: password that user has given
+			               // attributesData: object with key as attribute name and value that the user has given.
+				cognitoUser.completeNewPasswordChallenge(newPassword, attributesData, this)
+	        },
+	    });
+	  }
+  
+	</script>	
 						
-	<script src="js/jquery-3.2.1.min.js"></script>
+	<!--script src="js/jquery-3.2.1.min.js"></script-->
 	<script src="styles/bootstrap-4.1.2/popper.js"></script>
 	<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
 	<script src="plugins/greensock/TweenMax.min.js"></script>
@@ -165,12 +208,5 @@
 	<script src="plugins/parallax-js-master/parallax.min.js"></script>
 	<script src="js/custom.js"></script>
 		
-
-        <script src="js/vendor/jquery-3.1.0.js"></script>
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="js/vendor/aws-cognito-sdk.min.js"></script>
-        <script src="js/vendor/amazon-cognito-identity.min.js"></script>
-        <script src="js/config.js"></script>
-        <script src="js/cognito-auth.js"></script>
     </body>
 </html>

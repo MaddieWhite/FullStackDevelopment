@@ -6,6 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="BHost template project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="js/aws-cognito-sdk.min.js"></script>
+<!--script src="https://code.jquery.com/jquery-1.11.3.min.js"></script--> 
+<script src="js/amazon-cognito-auth.min.js"></script> 
+<script src="js/amazon-cognito-identity.min.js"></script>  
+<script src="js/config.js"></script>
+
 <link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.2/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
@@ -15,20 +22,16 @@
 <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 
 
-<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--link rel="icon" type="image/png" href="images/icons/favicon.ico"/-->
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="css/util.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
 
-        <link rel="stylesheet" href="css/font.css">
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/index.css">
-        <link rel="stylesheet" href="css/message.css">
-
 </head>
 <body>
+ 
 
 <div class="super_container">
 
@@ -83,26 +86,6 @@
 			</div>
 		</div>
 	</div>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-
-        <div id="noCognitoMessage" class="configMessage" style="display: none;">
-            <div class="backdrop"></div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">No Cognito User Pool Configured</h3>
-                </div>
-                <div class="panel-body">
-                    <p>There is no user pool configured in <a href="/js/config.js">/js/config.js</a>. You'll configure this in Module 2 of the workshop.</p>
-                </div>
-            </div>
-        </div>
-
-        <header>
-          <img src="images/logo.png">
-        </header>
-
 
 	<div class="limiter">
 		<div class="container-login100">
@@ -128,14 +111,14 @@
 			</div>
 			  
 			  <div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
-              <input class="input100" type="password" id="password2InputRegister" placeholder="Confirm Password" pattern=".*" required>
+              <input class="input100" type="password" id="confirmationpassword" placeholder="Confirm Password" pattern=".*" required>
 				<span class="focus-input100-1"></span>
 				<span class="focus-input100-2"></span>
 			</div>
 
               
 		  					<div class="container-login100-form-btn m-t-20">
-		  						<button type="submit" class="login100-form-btn">
+		  						<button type="button" class="login100-form-btn" onclick="registerButton()">
 		  							Sign Up
 		  						</button>
 		  					</div>
@@ -145,13 +128,58 @@
 		  			  	  </div>
 		  					</div>
 		  					</div>
-		  					<!--/form-->
 		  			</form>
 		  			</div>
 		  		</div>
 		  	</div>
             </form>
         </section>
+		
+   <script>
+   		var username;
+   		var password;
+   		var poolData;
+			
+   	  function registerButton() {
+		
+   		username = document.getElementById("emailInputRegister").value;
+		
+   		if (document.getElementById("passwordInputRegister").value != document.getElementById("passwordInputRegister").value) {
+   			alert("Passwords Do Not Match!")
+   			throw "Passwords Do Not Match!"
+   		} else {
+   			password =  document.getElementById("passwordInputRegister").value;	
+   		}
+		
+   		poolData = {
+	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
+	        ClientId : '352g7qe1vat8ok0631n096c8gt', // Your client id here
+   			};		
+   		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+   		var attributeList = [];
+		
+   		var dataEmail = {
+   			Name : 'email', 
+   			Value : username, //get from form field
+   		};
+		
+   		var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+		
+		
+   		attributeList.push(attributeEmail);
+   		userPool.signUp(username, password, attributeList, null, function(err, result){
+   			if (err) {
+   				alert(err.message || JSON.stringify(err));
+   				return;
+   			}
+   			cognitoUser = result.user;
+   			console.log('user name is ' + cognitoUser.getUsername());
+   			//change elements of page
+   			document.getElementById("titleheader").innerHTML = "Check your email for a verification link";
+			
+   		});
+   	  }
+   	</script>
 
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="styles/bootstrap-4.1.2/popper.js"></script>
@@ -166,12 +194,9 @@
 	<script src="plugins/progressbar/progressbar.min.js"></script>
 	<script src="plugins/parallax-js-master/parallax.min.js"></script>
 	<script src="js/custom.js"></script>
-
-
-        <script src="js/vendor/jquery-3.1.0.js"></script>
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="js/vendor/aws-cognito-sdk.min.js"></script>
-        <script src="js/vendor/amazon-cognito-identity.min.js"></script>
+	
+        <!--script src="jsaws-cognito-sdk.min.js"></script-->
+        <!--script src="js/amazon-cognito-identity.min.js"></script-->
         <script src="js/config.js"></script>
         <script src="js/cognito-auth.js"></script>
     </body>

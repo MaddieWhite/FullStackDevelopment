@@ -3,7 +3,7 @@
 var WildRydes = window.WildRydes || {};
 
 (function scopeWrapper($) {
-    var signinUrl = 'login.html';
+    var signinUrl = '/signin.html';
 
     var poolData = {
         UserPoolId: _config.cognito.userPoolId,
@@ -59,7 +59,7 @@ var WildRydes = window.WildRydes || {};
         };
         var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
 
-        userPool.signUp(email, password, [attributeEmail], null,
+        userPool.signUp(toUsername(email), password, [attributeEmail], null,
             function signUpCallback(err, result) {
                 if (!err) {
                     onSuccess(result);
@@ -72,7 +72,7 @@ var WildRydes = window.WildRydes || {};
 
     function signin(email, password, onSuccess, onFailure) {
         var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
-            Username: email,
+            Username: toUsername(email),
             Password: password
         });
 
@@ -95,9 +95,13 @@ var WildRydes = window.WildRydes || {};
 
     function createCognitoUser(email) {
         return new AmazonCognitoIdentity.CognitoUser({
-            Username: email,
+            Username: toUsername(email),
             Pool: userPool
         });
+    }
+
+    function toUsername(email) {
+        return email.replace('@', '-at-');
     }
 
     /*
@@ -117,7 +121,7 @@ var WildRydes = window.WildRydes || {};
         signin(email, password,
             function signinSuccess() {
                 console.log('Successfully Logged In');
-                window.location.href = 'userpage.html';
+                window.location.href = 'ride.html';
             },
             function signinError(err) {
                 alert(err);
