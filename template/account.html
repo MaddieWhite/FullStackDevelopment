@@ -18,6 +18,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
+ <!--Cognito JavaScript-->
+	<script src="js/amazon-cognito-identity.min.js"></script>  
+	<script src="js/config.js"></script>
 
    <style>
      /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -65,7 +69,7 @@
 				<!-- Header Links -->
 				<div class="header_links">
 					<ul class="d-flex flex-row align-items-center justify-content-start">
-						<li><a href="login.html">Login</a></li>
+						<li><a href="index.html">Sign Out</a></li>
 					</ul>
 				</div>
 
@@ -96,7 +100,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="home_content">
-						<div class="home_title">Username</div>
+						<div class="home_title" id="email_value">Username</div>
 					</div>
 				</div>
 			</div>
@@ -122,18 +126,6 @@
     </div>
   </div>
 </nav>
-
-<!--iv class="container-fluid">
-  <div class="row content">
-    <div class="col-sm-3 sidenav hidden-xs">
-      <h2>Logo</h2>
-      <ul class="nav nav-pills nav-stacked">--
-        <!--li class="active"><a href="#section1">Dashboard</a></li-->
-        <!--li><a href="#section2">Schools</a></li>
-        <li><a href="#section3">Sailors</a></li-->
-      <!--/ul><br>
-    </div>
-    <br-->
 
     <div class="col-sm-9 offset-1">
       <div class="well">
@@ -175,8 +167,42 @@
   </div>
 </div>
 
-</body>
-</html>
+
+ <script>
+	var data = { 
+	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
+	        ClientId : '352g7qe1vat8ok0631n096c8gt',
+    };
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+    var cognitoUser = userPool.getCurrentUser();
+	
+	window.onload = function(){
+    if (cognitoUser != null) {
+        cognitoUser.getSession(function(err, session) {
+            if (err) {
+                alert(err);
+                return;
+            }
+            console.log('session validity: ' + session.isValid());
+			//Set the profile info
+			cognitoUser.getUserAttributes(function(err, result) {
+				if (err) {
+					console.log(err);
+					return;
+				}
+				console.log(result);
+				document.getElementById("email_value").innerHTML = result[2].getValue();	
+			});			
+			
+        });
+    }
+}
+	function signOut(){
+	    if (cognitoUser != null) {
+          cognitoUser.signOut();	  
+        }
+	}
+    </script>
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap-4.1.2/popper.js"></script>

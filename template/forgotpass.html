@@ -15,13 +15,19 @@
 <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 
-
-<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="css/util.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
+
+	<!-- Javascript SDKs-->
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> 
+	<script src="js/amazon-cognito-auth.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+	<script src="js/amazon-cognito-identity.min.js"></script>   
+	<script src="js/config.js"></script>
+
 </head>
 <body>
 
@@ -90,13 +96,13 @@
 		</span>
 
 		<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-           <input class="input100" type="email" id="emailInputSignin" placeholder="Email" required>
+           <input class="input100" type="email" id="inputUsername" placeholder="Email" required>
 		<span class="focus-input100-1"></span>
 		<span class="focus-input100-2"></span>
 	</div>
 
            <div class="container-login100-form-btn m-t-20">
-			  <button class="login100-form-btn">
+			  <button class="login100-form-btn" type="button" onclick="forgotpasswordbutton()">
 		      Reset Password
 			</button>
 		</div>
@@ -105,6 +111,39 @@
 		</div>
 	</div>
 
+<script>
+	function forgotpasswordbutton() {
+		var poolData = {
+	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
+	        ClientId : '352g7qe1vat8ok0631n096c8gt', // Your client id here
+	    };
+	
+	    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+	
+	    var userData = {
+	        Username : document.getElementById("inputUsername").value,
+	        Pool : userPool,
+	    };
+	
+	    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+		
+	    cognitoUser.forgotPassword({
+	        onSuccess: function (result) {
+	            console.log('call result: ' + result);
+	        },
+	        onFailure: function(err) {
+	            alert(err);
+				console.log(err);
+	        },
+	        inputVerificationCode() {
+	            var verificationCode = prompt('Please input verification code ' ,'');
+	            var newPassword = prompt('Enter new password ' ,'');
+	            cognitoUser.confirmPassword(verificationCode, newPassword, this);
+	        }
+	    });
+	  }
+  
+	</script>
 
      </section>
 
@@ -121,13 +160,5 @@
 	<script src="plugins/progressbar/progressbar.min.js"></script>
 	<script src="plugins/parallax-js-master/parallax.min.js"></script>
 	<script src="js/custom.js"></script>
-
-
-         <script src="js/vendor/jquery-3.1.0.js"></script>
-         <script src="js/vendor/bootstrap.min.js"></script>
-         <script src="js/vendor/aws-cognito-sdk.min.js"></script>
-         <script src="js/vendor/amazon-cognito-identity.min.js"></script>
-         <script src="js/config.js"></script>
-         <script src="js/cognito-auth.js"></script>
      </body>
  </html>
