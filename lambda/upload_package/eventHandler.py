@@ -1,15 +1,32 @@
-import requests, json, re, time, random, csv, datetime, boto3, multiprocessing
-from bs4 import BeautifulSoup
+import requests, json, re, time, random, csv, datetime,json
+# from bs4 import BeautifulSoup
+import pymysql, logger
+
+rds_host  = "sailstat.cgycbijj8kzf.us-east-1.rds.amazonaws.com"
+name = "admin"
+password = "C6GbBlrJvigSLgatCNS5"
+db_name = "indivstats"
+
+#Code to connect to database.
+try:
+    conn = pymysql.connect(rds_host, user=name, passwd=password, db=db_name, connect_timeout=5)
+except pymysql.MySQLError as e:
+    logger.error("ERROR: Unexpected error: Could not connect to MySQL instance.")
+    logger.error(e)
+    sys.exit()
+logger.info("SUCCESS: Connection to RDS MySQL instance succeeded")
+
 
 #Lambda handler that allows for monolith functions accepts single sailor or roster as operations and the uuid for both respectivly
 def lambda_handler(event, context):
-    if event['op'] == "si":
-        return single_person_request(event['uuid'])
-    elif event['op'] == 'ro':
-        if "season" in event:
-            return roster_scrape(event['uuid'], event['season'])
-        else:
-            return roster_scrape(event['uuid'])
+    parameters = event['queryStringParameters']
+    if parameters['op'] == "si":
+        return single_person_request(parameters['uuid'])
+    # elif parameters['op'] == 'ro':
+    #     if "season" in parameters:
+    #         return roster_scrape(parameters['uuid'], parameters['season'])
+    #     else:
+    #         return roster_scrape(parameters['uuid'])
 
 #This function checks the database for the sailor to be already existing and if it does, returns what the database check found.
 #Otherwise it calls a new scrape and returns what that finds.
@@ -21,46 +38,45 @@ def single_person_request(uuid):
         return sailor_scrape(uuid)
 
 #This function takes in a uuid of the team and the season optionally and creates new lambda invokations for all sailors found.
-def roster_scrape(uuid, season="f19"):
-    #Invokes seperate lambda functions so that we don't have to rely on one really long invocation for all uuid's found.
-    client = boto3.client("lambda")
-    for sailor in roster_finder(uuid, season):
-        client.invoke(
-            FunctionName='single_scraper',
-            InvocationType='Event',
-            Payload=json.dumps({"uuid":sailor,"op":"si"})
-            )
+# def roster_scrape(uuid, season="f19"):
+#     #Invokes seperate lambda functions so that we don't have to rely on one really long invocation for all uuid's found.
+#     client = boto3.client("lambda")
+#     for sailor in roster_finder(uuid, season):
+#         client.invoke(
+#             FunctionName='single_scraper',
+#             InvocationType='Event',
+#             Payload=json.dumps({"uuid":sailor,"op":"si"})
+#             )
 
 #Takes in a teams UUID and returns a list of sailors uuids.
-def roster_finder(uuid, season):
-        page = requests.get("https://scores.collegesailing.org/schools/" + uuid + "/" + season + "/roster")
-        content = BeautifulSoup(page.content, 'html.parser')
-        roster = []
-        #find the tablebody and the find all the player rows
-        table = content.find("tbody")
-        players = table.find_all("tr")
-        #For every player row, we get their href link which is the same as their uuid.
-        for player in players:
-            #Try catch for the rare time that users on the roster list don't have a roster page.
-            try:
-                uuid = player.find("a", href = True).get('href')
-                uuid = re.search(r'^/sailors/(.*)/$', uuid).group(1)
-            except:
-                continue
-            roster.append(uuid)
-        return(roster)
+# def roster_finder(uuid, season):
+#         page = requests.get("https://scores.collegesailing.org/schools/" + uuid + "/" + season + "/roster")
+#         content = BeautifulSoup(page.content, 'html.parser')
+#         roster = []
+#         #find the tablebody and the find all the player rows
+#         table = content.find("tbody")
+#         players = table.find_all("tr")
+#         #For every player row, we get their href link which is the same as their uuid.
+#         for player in players:
+#             #Try catch for the rare time that users on the roster list don't have a roster page.
+#             try:
+#                 uuid = player.find("a", href = True).get('href')
+#                 uuid = re.search(r'^/sailors/(.*)/$', uuid).group(1)
+#             except:
+#                 continue
+#             roster.append(uuid)
+#         return(roster)
 
 #This function takes in the uuid for an individual sailor and returns true, if they exist already or false if they don't
 def database_check(uuid):
-    dydb = boto3.resource('dynamodb')
-    table = dydb.Table("sailor-list")
-    try:
-        response = table.get_item(Key={"sailor-uuid":uuid})['Item']
-    except:
-        return False
+    with conn.cursor() as cur:
+        cur.execute("SELECT EXISTS(SELECT * FROM indivstats WHERE sailor-uuid=\"" + uuid + ");")
+    print(conn.commit())
+        # return False
     # return response #comment this to have the database all update
-    return False #uncomment this to have the database always update
+    # return False #uncomment this to have the database always update
 
+database_check("thomas-walker")
 #This method takes in a regatta dictionary and returns the percetages of regattas sailed in versus attended.
 def sailPercentage(regattaDict):
     #Check if the person hasn't sailed any regattas we return a None
@@ -76,7 +92,7 @@ def sailPercentage(regattaDict):
             sailedCounter = sailedCounter + 1;
     if sailedCounter == 0:
         return 0
-    return float(sailedCounter)/float(regattaCounter)*100
+    return str(float(sailedCounter)/float(regattaCounter)*100)
 
 #This method takes in the regatta dictionary and returns the average finish
 def averageFinish(regattaDict):
@@ -101,7 +117,7 @@ def averageFinish(regattaDict):
             finishTotal += int(re.findall(r'([0-9]{1,2})/', result)[0])
     if finishCounter == 0:
         return None
-    return float(finishTotal)/finishCounter
+    return str(float(finishTotal)/finishCounter)
 
 
 #This is the main function, scrapes all relevent data for the inputted sailors uuid.
@@ -120,11 +136,11 @@ def sailor_scrape(uuid):
     sailP = None
     averageF = None
 
-    #Before I had tons of output statements, now it's just this.  It removes any datapoints not yet defined when we call it and pushes to database.
+    #Before I had tons of output statements, not its just this and we remove any datapoints not yet defined when we call it
     def output():
         dict = {
         'sailor-uuid':uuid,
-        'regatta-count':eventCounter,
+        'regatta-count':str(eventCounter),
         'regattas':regattas,
         'home': home,
         'grad_year':grad_year,
@@ -180,4 +196,13 @@ def sailor_scrape(uuid):
     sailP = sailPercentage(regattas)
     averageF = averageFinish(regattas)
     output()
-    return(table.get_item(Key={"sailor-uuid":uuid})['Item'])
+    return returned((table.get_item(Key={"sailor-uuid":uuid})['Item']))
+
+
+def returned(body):
+    return {
+    'headers':{"Access-Control-Allow-Origin":"*",},
+    "isBase64Encoded": False,
+    'statusCode': 200,
+    'body': json.dumps(body)
+    }
