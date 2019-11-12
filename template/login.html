@@ -174,21 +174,6 @@
 	            alert(err.message || JSON.stringify(err));
 
 			 },
-			newPasswordRequired: function(userAttributes, requiredAttributes) {
-			               // User was signed up by an admin and must provide new
-			               // password and required attributes, if any, to complete
-			               // authentication.
-
-			               // userAttributes: object, which is the user's current profile. It will list all attributes that are associated with the user.
-			               // Required attributes according to schema, which don’t have any values yet, will have blank values.
-			               // requiredAttributes: list of attributes that must be set by the user along with new password to complete the sign-in.
-
-
-			               // Get these details and call
-			               // newPassword: password that user has given
-			               // attributesData: object with key as attribute name and value that the user has given.
-				cognitoUser.completeNewPasswordChallenge(newPassword, attributesData, this)
-	        },
 	    });
 	  }
 
