@@ -93,7 +93,7 @@
 				<form id= registrationForm>
         			<section class="form-wrap">
 						<form id="registrationForm">
-						<span class="login100-form-title p-b-33">
+						<span class="login100-form-title p-b-33" id="titleheader">
 				Sign Up
 			</span>
 
@@ -154,7 +154,8 @@
    		poolData = {
 	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
 	        ClientId : '352g7qe1vat8ok0631n096c8gt', // Your client id here
-   			};		
+   			};	
+				
    		var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
    		var attributeList = [];
 		
@@ -167,9 +168,10 @@
 		
 		
    		attributeList.push(attributeEmail);
+		
    		userPool.signUp(username, password, attributeList, null, function(err, result){
    			if (err) {
-   				alert(err.message || JSON.stringify(err));
+   				//alert(err);
    				return;
    			}
    			cognitoUser = result.user;
