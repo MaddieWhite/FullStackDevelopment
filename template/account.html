@@ -22,6 +22,8 @@
  <!--Cognito JavaScript-->
 	<script src="js/amazon-cognito-identity.min.js"></script>  
 	<script src="js/config.js"></script>
+	
+	<style>div { padding: 3px;}</style>
 
    <style>
      /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -29,7 +31,7 @@
 
      /* Set gray background color and 100% height */
      .sidenav {
-       background-color: #f1f1f1;
+       background-color: #ffffff;
        height: 100%;
      }
 
@@ -100,7 +102,8 @@
 			<div class="row">
 				<div class="col">
 					<div class="home_content">
-						<div class="home_title" id="email_value">Username</div>
+						<!--div class="home_title" id="email_value"><h4>Username</h4></div-->
+						<h5 class="home_title" id = "email_value">Username</h5>
 					</div>
 				</div>
 			</div>
@@ -128,36 +131,27 @@
 </nav>
 
     <div class="col-sm-9 offset-1">
-      <div class="well">
-        <h4>Upcoming Regattas</h4>
-        <p>Some text..</p>
+      <div>
+        
       </div>
       </div>
 
         <div class="row">
         <div class="col-sm-4 offset-1">
           <div class="well">
-			<h4>Schools</h4>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
+			<h4>Leaderboards</h4>
+            <p><li><a href="Leaderboard.html">Average Finish</a></li></p>
           </div>
         </div>
 
         <div class="col-sm-4 ">
           <div class="well">
 			<h4>Sailors</h4>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
+			<p><li><a href="sailor.html">Text</a></li></p>
           </div>
         </div>
 	</div>
-        <div class="col-sm-9 offset-1">
-          <div class="well">
-            <h4>Leaderboard</h4>
-          </div>
-        </div>
+        
 
       </div>
 
