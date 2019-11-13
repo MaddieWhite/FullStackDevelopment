@@ -1,4 +1,4 @@
-import pymysql, requests, re, datetime, json, sys
+import pymysql, requests, re, json, sys, datetime
 from bs4 import BeautifulSoup
 import scrapingtools as st
 
@@ -14,21 +14,28 @@ except pymysql.MySQLError as e:
     print("Connection Issue")
     sys.exit()
 
-def database_check(uuid):
+#This checks the database for the sailor, if they do exist we check if their data is a week old.
+def sailor_parse(uuid):
     with conn.cursor() as cur:
-        command = "SELECT EXISTS(SELECT * FROM INDIVSTAT WHERE SAILORUUID='" + uuid + "');"
+        #Attempt to retrieve DATETIME coloumn for sailor
+        command = "SELECT DATETIME FROM INDIVSTAT WHERE SAILORUUID='" + uuid + "';"
         cur.execute(command)
-        response = str(cur.fetchone())
-        if(response == "(0,)"):
-            return False
+        response = cur.fetchone()
+        #Check if the sailor exists at all
+        if response is None:
+            single_database_add(uuid)
+            return True
+        #If they exist check to see if they have been updated in the last week.
+        else:
+            currentDate = datetime.datetime.now()
+            if (response[0] + datetime.timedelta(days=7)) >= currentDate:
+                return True
+        single_database_update(uuid)
         return True
-    conn.close()
-
 
 def single_database_add(uuid):
     with conn.cursor() as cur:
         scraperesult = st.sailor_scrape(uuid)
-
         indivStat = scraperesult.copy()
         del indivStat['regattas']
         indivcommand = """INSERT INTO INDIVSTAT(SAILORUUID, REGATTACOUNT, HOME, GRADYEAR, SAILP, AVERAGEFINISH) VALUES(%s, %s, %s, %s, %s, %s);"""
@@ -43,11 +50,40 @@ def single_database_add(uuid):
         cur.executemany(regattacommand, outputDict)
         conn.commit()
 
+def single_database_update(uuid):
+    with conn.cursor() as cur:
+        scraperesult = st.sailor_scrape(uuid)
+        indivStat = scraperesult.copy()
+        del indivStat['regattas']
+        del indivStat['sailor-uuid']
+        indivcommand = """UPDATE INDIVSTAT SET REGATTACOUNT=%s, HOME=%s, GRADYEAR=%s, SAILP=%s, AVERAGEFINISH=%s WHERE SAILORUUID = %s"""
+        cur.execute(indivcommand, tuple([indivStat[e] for e in indivStat])+(scraperesult['sailor-uuid'],))
+        conn.commit()
 
-for uuid in  st.roster_finder("st-mary"):
-    if(not database_check(uuid)):
-        single_database_add(uuid)
-    else:
-        print("already in")
+        for x in scraperesult['regattas']:
+            checkCommand = "SELECT EXISTS(SELECT * FROM INDIVREGATTA WHERE SAILORUUID=\"" + uuid + "\" AND LINK=\"" + scraperesult['regattas'][x]['link'] + "\")"
+            cur.execute(checkCommand)
+            if cur.fetchone()[0] == 0:
+                regattacommand = "INSERT INTO INDIVREGATTA(LOCATION, POSITION, FINISH, STARTDATE, LINK, SAILORUUID) VALUES(%s, %s, %s, %s, %s, %s)"
+                print("selecting " + x)
+                janky = tuple(scraperesult['regattas'][x][e] for e in scraperesult['regattas'][x]) + (uuid,)
+                cur.execute(regattacommand, janky)
 
-# single_database_add('thomas-walker')
+def sailor_retrieve(uuid):
+    with conn.cursor() as cur:
+        cur.execute("""SELECT * FROM INDIVSTAT WHERE SAILORUUID=%s""", uuid)
+        print(cur.fetchone())
+        cur.execute("""SELECT * FROM INDIVREGATTA WHERE SAILORUUID=%s""", uuid)
+        print(cur.fetchall())
+
+
+def lambdareturn(body, status=200):
+    return {
+    'headers':{"Access-Control-Allow-Origin":"*",},
+    "isBase64Encoded": False,
+    'statusCode': status,
+    'body': json.dumps(body)
+    }
+
+
+sailor_retrieve('thomas-walker')
