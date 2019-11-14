@@ -1,6 +1,7 @@
 import requests, json, datetime, sys, re
 from bs4 import BeautifulSoup
 
+#Request method that has error handling for when it won't connect.
 def request(url):
     try:
         response = requests.get(url)
@@ -10,12 +11,11 @@ def request(url):
         print("Error occured in get occurred: {}".format(err))
     sys.exit()
 
-#This method takes in a regatta dictionary and returns the percetages of regattas sailed in versus attended.
+#Takes in a regatta dictionary and returns the percetages of regattas sailed in versus attended.
 def sailPercentage(regattaDict):
     #Check if the person hasn't sailed any regattas we return a None
     if regattaDict == {}:
         return None
-
     sailedCounter = 0
     regattaCounter = 0
     for regatta in regattaDict.values():
@@ -23,18 +23,18 @@ def sailPercentage(regattaDict):
         #If they weren't a reserve, add one to the sailedCounter
         if regatta["position"] != "Reserve":
             sailedCounter = sailedCounter + 1;
+    #If we don't return when sailedCounter is 0, there are divide by 0 issues.
     if sailedCounter == 0:
         return 0
     return float(sailedCounter)/float(regattaCounter)*100
 
-#This method takes in the regatta dictionary and returns the average finish
+#Takes in the regatta dictionary and returns the average finish
 def averageFinish(regattaDict):
     #If they have never sailed a regatta we return None
     if regattaDict == {}:
         return None
     finishCounter = 0
     finishTotal = 0
-
     for regatta in regattaDict.values():
         r_finish = regatta["finish"]
         #If they didn't get a result we continue
@@ -53,6 +53,7 @@ def averageFinish(regattaDict):
     return float(finishTotal)/finishCounter
 
 #Takes in a teams UUID and returns a list of sailors uuids.
+## TODO: Add error handling for invalid teams.
 def roster_finder(uuid, season="f19"):
         page = request("https://scores.collegesailing.org/schools/{}/{}/roster".format(uuid, season))
         content = BeautifulSoup(page.content, 'html.parser')
@@ -72,10 +73,10 @@ def roster_finder(uuid, season="f19"):
         return(roster)
 
 #This method takes in a sailors uuid and returns a dictionary with respective results.
+## TODO: Add error handling for invalid sailors.
 def sailor_scrape(uuid):
     page = request("https://scores.collegesailing.org/sailors/{}/".format(uuid))
     content = BeautifulSoup(page.content, 'html.parser')
-
     #Setup all output variables
     regattaDict = {}
     eventCounter = 0
@@ -83,8 +84,7 @@ def sailor_scrape(uuid):
     grad_year = None
     sailP = None
     averageF = None
-
-    #Before I had tons of output statements, now it's just this.  It removes any datapoints not yet defined when we call it and pushes to database.
+    #Output method that makes forming a dictionary with all the information easy.
     def output():
         dict = {
         'sailor-uuid':uuid,
@@ -122,7 +122,7 @@ def sailor_scrape(uuid):
 
         events = events.find_all('tr')
         for event in events:
-            #For everyevent, we find the name, location, position and finish and start date.
+            #For every event, we find the name, location, position and finish and start date.
             tdList = event.find_all('td')
             eventName = event.find_all('span')[0].text
             eventLink = tdList[0].find("a", href=True).get('href')
@@ -133,7 +133,7 @@ def sailor_scrape(uuid):
             eventCounter+=1
             regattaDict[seasonUuid+"-"+eventName] = {"location":eventLocation, "position":eventPosition, "finish":eventFinish, "start-date":startDate, "link":eventLink}
 
-    #Caculates regatta based data.
+    #Caculates regatta-dict based data.
     sailP = sailPercentage(regattaDict)
     averageF = averageFinish(regattaDict)
     return output()
