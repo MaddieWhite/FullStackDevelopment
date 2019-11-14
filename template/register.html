@@ -171,7 +171,7 @@
 		
    		userPool.signUp(username, password, attributeList, null, function(err, result){
    			if (err) {
-   				//alert(err);
+   				alert(err.message || JSON.stringify(err));
    				return;
    			}
    			cognitoUser = result.user;
