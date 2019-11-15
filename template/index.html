@@ -7,12 +7,19 @@
 <meta name="description" content="BHost template project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.2/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+<script language="javascript">
+function star ( icon ) {
+  $(icon).toggleClass('fa-star-o fa-star');
+}
+</script>
+
+
 </head>
 <body>
 
@@ -46,7 +53,7 @@
 						<li><a href="login.html">Login</a></li>
 					</ul>
 				</div>
-				
+
 
 				<!-- Hamburger -->
 				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -97,8 +104,6 @@
 
 
 
-	<!-- Why Choose Us -->
-
 	<div class="why">
 		<div class="container">
 			<div class="row">
@@ -106,6 +111,7 @@
 					<div class="section_title_container text-center">
 						<div class="section_title"><h2>What We Do?</h2></div>
 						<div class="section_subtitle">Sailing Scores provides statistics about college sailing teams and college sailors.</div>
+						<i class="fa fa-star-o" onClick="star(this)"></i>
 					</div>
 				</div>
 			</div>
