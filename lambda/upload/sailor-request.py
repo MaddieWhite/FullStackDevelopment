@@ -1,109 +1,46 @@
-import pymysql, requests, re, json, sys, datetime
-from bs4 import BeautifulSoup
-import scrapingtools as st
-
-## TODO: The plan for this class is to return either a forwarding url to the user or an error message.
-
-#Connection to the database settings
-rds_host  = "sailstat.cgycbijj8kzf.us-east-1.rds.amazonaws.com"
-name = "admin"
-password = "C6GbBlrJvigSLgatCNS5"
-db_name = "indivstats"
+import pymysql, requests, re, json, sys, datetime, rds_config
+## TODO: The plan for this class is to return a json dictionary as its body that we can use ajax to populate HTML.
+#Looks like I can make SQL do it: https://mysqlserverteam.com/mysql-8-0-from-sql-tables-to-json-documents-and-back-again/
 
 #Attempt to connect to database.
+connection = True
 try:
-    conn = pymysql.connect(rds_host, user=name, passwd=password, db=db_name, connect_timeout=5)
+    conn = pymysql.connect(rds_config.db_host, user=rds_config.db_username, passwd=rds_config.db_password, db=rds_config.db_name, connect_timeout=5)
 except pymysql.MySQLError as e:
-    print("Connection Issue")
-    sys.exit()
+    connection = False
 
-#Checks the database to see what operation is needed for the respective sailor
-def sailor_parse(uuid):
-    with conn.cursor() as cur:
-        #Attempt to retrieve DATETIME coloumn for sailor, it its none, we know the sailor doesn't exit in the database yet.
-        command = "SELECT datetime FROM sailors WHERE sailor_uuid='" + uuid + "';"
-        cur.execute(command)
-        conn.commit()
-        response = cur.fetchone()
-        #Add if the sailor doesn't exist
-        if response is None:
-            print("adding")
-            single_database_add(uuid)
-            return True
-        #Then check how old their last update was, if it is older than 7 days, we run an update function, otherwise we do nothing.
-        else:
-            currentDate = datetime.datetime.now()
-            if (response[0] + datetime.timedelta(days=7)) >= currentDate:
-                print("updated within 7 days")
-                return True
-        single_database_update(uuid)
-        print("updating")
-        return True
+def lambda_handler(event, context):
+    parameters = event['queryStringParameters']
+    return sailor_request(parameters['uuid'])
 
-#Adds a sailor to the database
-## TODO: Error handling for invalid sailor uuids.
-def single_database_add(uuid):
-    with conn.cursor() as cur:
-        #Get the scraped page.
-        scraperesult = st.sailor_scrape(uuid)
+def sailor_request(uuid):
+        #If we can't connect to the database we just return a 500.
+    if not connection:
+        return lambdareturn("Unable to connect to datebase", 500)
 
-        #Check to see if the sailors team is in the teams table.
-        #The order of the inserts is really important becuase a team needs to exist before we can a sailor to that team.
-        team = scraperesult['home']
-        cur.execute("""SELECT * FROM teams WHERE team_name=%s """, team)
-        conn.commit()
-        if cur.fetchone() is None:
-            cur.execute("""INSERT INTO teams(team_name) VALUES(%s)""", team)
-
-        #Insert the scraping result into the table first sailors
-        scraperesult = st.sailor_scrape(uuid)
-        indivStat = scraperesult.copy()
-        del indivStat['regattas']
-        indivcommand = """INSERT INTO sailors(sailor_uuid, regatta_count, home, grad_year, sail_percent, average_finish) VALUES(%s, %s, %s, %s, %s, %s);"""
-        cur.execute(indivcommand, tuple([indivStat[e] for e in indivStat]))
-        conn.commit()
-
-        #Insert all the regattas
-        regattacommand = "INSERT INTO regattas(location, position, finish, startdate, link, sailor_uuid) VALUES(%s, %s, %s, %s, %s, %s)"
-        outputDict = []
-        for x in scraperesult['regattas']:
-            janky = tuple(scraperesult['regattas'][x][e] for e in scraperesult['regattas'][x]) + (uuid,)
-            outputDict.append(janky)
-        cur.executemany(regattacommand, outputDict)
-        conn.commit()
-
-#Updates a sailor's entry in the database.
-## TODO: An update that doesn't actually change anything doesn't update the timestamp on the check which is problematic. No clue how to fix.
-def single_database_update(uuid):
-    with conn.cursor() as cur:
-        scraperesult = st.sailor_scrape(uuid)
-
-        #We have to modify the tuple to make it good for the update command.
-        sailorInfo = scraperesult.copy()
-        del sailorInfo['regattas']
-        del sailorInfo['sailor-uuid']
-        indivcommand = """UPDATE sailors SET regatta_count=%s, home=%s, grad_year=%s, sail_percent=%s, average_finish=%s WHERE sailor_uuid = %s"""
-        cur.execute(indivcommand, tuple(sailorInfo[e] for e in sailorInfo])+(scraperesult['sailor-uuid'],))
-        conn.commit()
-
-        #Then for all reqattas, if they don't exist in the regattas table, we add them.
-        for x in scraperesult['regattas']:
-            checkCommand = "SELECT EXISTS(SELECT * FROM regattas WHERE sailor_uuid=\"" + uuid + "\" AND link=\"" + scraperesult['regattas'][x]['link'] + "\")"
-            cur.execute(checkCommand)
-            conn.commit()
-            if cur.fetchone()[0] == 0:
-                regattacommand = "INSERT INTO regattas(location, position, finish, startdate, link, sailor_uuid) VALUES(%s, %s, %s, %s, %s, %s)"
-                janky = tuple(scraperesult['regattas'][x][e] for e in scraperesult['regattas'][x]) + (uuid,)
-                cur.execute(regattacommand, janky)
-                conn.commit()
+        with conn.cursor() as cur:
+         #Retrive the sailors data already as json.
+         cur.execute("""SELECT JSON_OBJECT("sailor-uuid", sailor_uuid, "average_finish", average_finish, "grad_year", CONVERT(grad_year, CHAR), "regatta_count", regatta_count, "sail_percentage", sail_percent, "home", home) FROM sailors WHERE sailor_uuid=%s""", uuid)
+         conn.commit()
+         try:
+             sailorDict = json.loads(cur.fetchone()[0])
+         except:
+            return lambdareturn("Sailor not found", 400)
+         #Retrieve the regattas as a array of json objects
+         cur.execute("""SELECT JSON_ARRAYAGG(JSON_OBJECT(p.link, JSON_OBJECT("location", p.location , "finish", p.finish, "start-date", p.startdate, "position", p.position))) FROM regattas p WHERE sailor_uuid=%s""", uuid)
+         conn.commit()
+         regattaStats = json.loads(cur.fetchone()[0])
+         #Combine all the dictionaries in the array
+         save = {"regattas": {k: v for d in regattaStats for k, v in d.items()}}
+         #Combine the two dictionaries
+         sailorDict.update(save)
+         return lambdareturn(sailorDict)
 
 #lambda return is how we make sure all our returns from lambda are formatted correctly
 def lambdareturn(body, status=200):
-    return {
-    'headers':{"Access-Control-Allow-Origin":"*",},
+    return json.dumps({
+    "headers":{"Access-Control-Allow-Origin":"*",},
     "isBase64Encoded": False,
-    'statusCode': status,
-    'body': json.dumps(body)
-    }
-
-sailor_parse("anna-patterson")
+    "statusCode": status,
+    "body": body
+    })

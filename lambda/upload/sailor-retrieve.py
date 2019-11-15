@@ -12,7 +12,11 @@ except pymysql.MySQLError as e:
     print("Connection Issue")
     sys.exit()
 
-#Checks the database to see what operation is needed for the respective sailor
+def lambda_handler(event, context):
+    parameters = event['queryStringParameters']
+    return sailor_parse(parameters['uuid'])
+
+#Checks the database to see what operation is needed for the respective sailor.
 def sailor_parse(uuid):
     with conn.cursor() as cur:
         #Attempt to retrieve DATETIME coloumn for sailor, it its none, we know the sailor doesn't exit in the database yet.
@@ -24,16 +28,16 @@ def sailor_parse(uuid):
         if response is None:
             print("adding")
             single_database_add(uuid)
-            return True
+            return lambdareturn(f"?uuid={uuid}")
         #Then check how old their last update was, if it is older than 7 days, we run an update function, otherwise we do nothing.
         else:
             currentDate = datetime.datetime.now()
             if (response[0] + datetime.timedelta(days=7)) >= currentDate:
                 print("updated within 7 days")
-                return True
+                return lambdareturn(f"?uuid={uuid}")
         single_database_update(uuid)
         print("updating")
-        return True
+        return lambdareturn(f"?uuid={uuid}")
 
 #Adds a sailor to the database
 ## TODO: Error handling for invalid sailor uuids.
@@ -101,14 +105,4 @@ def lambdareturn(body, status=200):
     'body': json.dumps(body)
     }
 
-#sailor_retrieve retrieves from the database and prints, need to write this for json and lambda though
-def sailor_retrieve(uuid):
-    with conn.cursor() as cur:
-        cur.execute("""SELECT * FROM sailors WHERE sailor_uuid=%s""", uuid)
-        conn.commit()
-        print(cur.fetchone())
-        cur.execute("""SELECT * FROM regattas WHERE sailor_uuid=%s""", uuid)
-        conn.commit()
-        print(cur.fetchall())
-
-sailor_parse("anna-patterson")
+print(sailor_parse("thomas-walker"))
