@@ -14,6 +14,11 @@
 <link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/about.css">
 <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
+<script language="javascript">
+function star ( icon ) {
+  $(icon).toggleClass('fa-star-o fa-star');
+}
+</script>
 </head>
 <body>
 
@@ -113,7 +118,14 @@
 
 
 						<button onclick="showhide('maisalist')"> MASIA Schools </button>
-						<div id="maisalist" style="display:none"><a href = "smcm.html">St. Mary's <br> Navy <br> Georgetown <br> George Washington <br> Hobart and William Smith <br> Cornell</a></div>
+						<div id="maisalist" style="display:none">
+              <a href = "smcm.html">St. Mary's </a> <i class="fa fa-star-o" onClick="star(this)"></i> <br>
+              <a href = "smcm.html">  Navy </a> <i class="fa fa-star-o" onClick="star(this)"></i><br>
+              <a href = "smcm.html">  Georgetown </a> <i class="fa fa-star-o" onClick="star(this)"></i><br>
+              <a href = "smcm.html">  George Washington </a> <i class="fa fa-star-o" onClick="star(this)"></i><br>
+              <a href = "smcm.html">  Hobart and William Smith </a> <i class="fa fa-star-o" onClick="star(this)"></i><br>
+              <a href = "smcm.html">  Cornell </a> 
+              </div>
 						<br>
 						<button onclick="showhide('neisalist')"> NEISA Schools </button>
 						<div id="neisalist" style="display:none"><a href = "#">Yale <br> Harvard <br> MIT <br> Roger Williams <br> Boston University <br> Boston College</a></div>
