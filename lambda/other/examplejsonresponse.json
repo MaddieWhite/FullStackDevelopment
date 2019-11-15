@@ -1,0 +1,245 @@
+{
+  "headers": {
+    "Access-Control-Allow-Origin": "*"
+  },
+  "isBase64Encoded": false,
+  "statusCode": 200,
+  "body": {
+    "home": "St. Mary's",
+    "grad_year": "2021",
+    "sailor-uuid": "thomas-walker",
+    "regatta_count": 38,
+    "average_finish": 5,
+    "sail_percentage": 50,
+    "regattas": {
+      "/f19/coed-showcase-finals/": {
+        "finish": "N/A",
+        "location": "Connecticut College",
+        "position": "Reserve",
+        "start-date": "2019-10-19"
+      },
+      "/f19/coed-showcase-showdown-st-mary/": {
+        "finish": "N/A",
+        "location": "St. Mary's",
+        "position": "Reserve",
+        "start-date": "2019-10-05"
+      },
+      "/f19/danmark/": {
+        "finish": "N/A",
+        "location": "Coast Guard",
+        "position": "Reserve",
+        "start-date": "2019-09-28"
+      },
+      "/f19/chesapeake-invitational-sat-fj/": {
+        "finish": "13/18",
+        "location": "St. Mary's",
+        "position": "Crew",
+        "start-date": "2019-09-14"
+      },
+      "/f19/riley-cup/": {
+        "finish": "4/18 (A Div)",
+        "location": "Old Dominion",
+        "position": "Crew",
+        "start-date": "2019-09-07"
+      },
+      "/s19/gill-sailing-coed-nationals/": {
+        "finish": "N/A",
+        "location": "Brown/Dartmouth",
+        "position": "Reserve",
+        "start-date": "2019-05-30"
+      },
+      "/s19/gill-coed-east-semis/": {
+        "finish": "N/A",
+        "location": "Brown",
+        "position": "Reserve",
+        "start-date": "2019-05-28"
+      },
+      "/s19/america-maisa-coed/": {
+        "finish": "1/18 (A Div)4/18 (B Div)",
+        "location": "Navy",
+        "position": "Crew",
+        "start-date": "2019-04-27"
+      },
+      "/s19/admiral-cup/": {
+        "finish": "5/18 (A Div)",
+        "location": "Kings Point",
+        "position": "Crew",
+        "start-date": "2019-04-20"
+      },
+      "/s19/prosser/": {
+        "finish": "N/A",
+        "location": "St. Mary's",
+        "position": "Reserve",
+        "start-date": "2019-04-06"
+      },
+      "/s19/team-race-challenge/": {
+        "finish": "2/8",
+        "location": "Cornell",
+        "position": "Crew",
+        "start-date": "2019-03-30"
+      },
+      "/s19/aaron-szambecki-team-race/": {
+        "finish": "9/10",
+        "location": "Old Dominion",
+        "position": "Crew",
+        "start-date": "2019-03-23"
+      },
+      "/s19/graham-hall/": {
+        "finish": "7/16",
+        "location": "Navy",
+        "position": "Crew",
+        "start-date": "2019-03-16"
+      },
+      "/s19/st-mary-team-race-interconference/": {
+        "finish": "N/A",
+        "location": "St. Mary's",
+        "position": "Reserve",
+        "start-date": "2019-03-09"
+      },
+      "/f18/war/": {
+        "finish": "6/18 (B Div)",
+        "location": "Navy",
+        "position": "Crew",
+        "start-date": "2018-10-27"
+      },
+      "/f18/truxtun-umsted-coed-showcase/": {
+        "finish": "1/19 (A Div)3/19 (B Div)",
+        "location": "Navy",
+        "position": "Crew",
+        "start-date": "2018-10-20"
+      },
+      "/f18/oyster/": {
+        "finish": "6/9",
+        "location": "St. Mary's",
+        "position": "Crew",
+        "start-date": "2018-10-13"
+      },
+      "/f18/coed-showcase/": {
+        "finish": "N/A",
+        "location": "MIT",
+        "position": "Reserve",
+        "start-date": "2018-10-06"
+      },
+      "/f18/danmark/": {
+        "finish": "N/A",
+        "location": "Coast Guard",
+        "position": "Reserve",
+        "start-date": "2018-09-29"
+      },
+      "/f18/top-coed/": {
+        "finish": "6/9",
+        "location": "Georgetown",
+        "position": "Crew",
+        "start-date": "2018-09-22"
+      },
+      "/f18/chesapeake-invitational-sunday/": {
+        "finish": "13/18",
+        "location": "St. Mary's",
+        "position": "Crew",
+        "start-date": "2018-09-16"
+      },
+      "/f18/chesapeake-invitational-sat/": {
+        "finish": "N/A",
+        "location": "St. Mary's",
+        "position": "Reserve",
+        "start-date": "2018-09-15"
+      },
+      "/s18/gill-coed-national-championships/": {
+        "finish": "N/A",
+        "location": "Old Dominion",
+        "position": "Reserve",
+        "start-date": "2018-05-31"
+      },
+      "/s18/gill-coed-west-semis/": {
+        "finish": "N/A",
+        "location": "Old Dominion",
+        "position": "Reserve",
+        "start-date": "2018-05-29"
+      },
+      "/s18/america/": {
+        "finish": "2/18 (B Div)",
+        "location": "St. Mary's",
+        "position": "Crew",
+        "start-date": "2018-04-28"
+      },
+      "/s18/admirals-cup/": {
+        "finish": "N/A",
+        "location": "Kings Point",
+        "position": "Reserve",
+        "start-date": "2018-04-21"
+      },
+      "/s18/navy-spring/": {
+        "finish": "1/20 (B Div)",
+        "location": "Navy",
+        "position": "Crew",
+        "start-date": "2018-04-14"
+      },
+      "/s18/capt-prosser-maisa-tr/": {
+        "finish": "5/85/8",
+        "location": "Cornell",
+        "position": "Crew",
+        "start-date": "2018-04-07"
+      },
+      "/s18/aaron-szambecki-team-race/": {
+        "finish": "3/10",
+        "location": "Old Dominion",
+        "position": "Crew",
+        "start-date": "2018-03-24"
+      },
+      "/s18/graham-hall-team-race/": {
+        "finish": "N/A",
+        "location": "Navy",
+        "position": "Reserve",
+        "start-date": "2018-03-17"
+      },
+      "/s18/gw-team-race/": {
+        "finish": "3/6",
+        "location": "Georgetown",
+        "position": "Crew",
+        "start-date": "2018-03-03"
+      },
+      "/s18/st-mary-quad-team-race/": {
+        "finish": "N/A",
+        "location": "St. Mary's",
+        "position": "Reserve",
+        "start-date": "2018-02-24"
+      },
+      "/s18/odu-quad/": {
+        "finish": "N/A",
+        "location": "Old Dominion",
+        "position": "Reserve",
+        "start-date": "2018-02-17"
+      },
+      "/f17/atlantic-coast-championships/": {
+        "finish": "N/A",
+        "location": "NY Maritime",
+        "position": "Reserve",
+        "start-date": "2017-11-11"
+      },
+      "/f17/war/": {
+        "finish": "9/18 (A Div)",
+        "location": "Hobart & William Sm",
+        "position": "Crew",
+        "start-date": "2017-10-28"
+      },
+      "/f17/75th-danmark/": {
+        "finish": "N/A",
+        "location": "Coast Guard",
+        "position": "Reserve",
+        "start-date": "2017-09-30"
+      },
+      "/f17/st-mary-fall-interconference/": {
+        "finish": "N/A",
+        "location": "St. Mary's",
+        "position": "Reserve",
+        "start-date": "2017-09-23"
+      },
+      "/f17/moody/": {
+        "finish": "1/18 (A Div)",
+        "location": "Rhode Island",
+        "position": "Crew",
+        "start-date": "2017-10-07"
+      }
+    }
+  }
+}
