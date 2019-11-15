@@ -44,5 +44,3 @@ def lambdareturn(body, status=200):
     "statusCode": status,
     "body": body
     })
-
-print(sailor_request("thomas-walker"))
