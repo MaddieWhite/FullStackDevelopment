@@ -15,11 +15,6 @@
 <link rel="stylesheet" type="text/css" href="styles/about.css">
 <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
 
-<script language="javascript">
-function star ( icon ) {
-  $(icon).toggleClass('fa-star-o fa-star');
-}
-</script>
 
 <style>
 	#container {
@@ -48,6 +43,24 @@ function star ( icon ) {
 	  width: 25%;
 	}
 </style>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+   <style>
+     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+     .row.content {height: 550px}
+
+     /* Set gray background color and 100% height */
+     .sidenav {
+       background-color: #f1f1f1;
+       height: 100%;
+     }
+
+     /* On small screens, set height to 'auto' for the grid */
+     @media screen and (max-width: 767px) {
+       .row.content {height: auto;}
+     }
+   </style>
 
 </head>
 <body>
@@ -97,12 +110,11 @@ function star ( icon ) {
 				<ul class="text-center">
 					<li><a href="index.html">Home</a></li>
 					<li><a href="schools.html">Schools</a></li>
-	                <li><a href="leaderboard.html">Leaderboard</a></li>
+	                <li><a href="leaderboard.html">Leaderboards</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
-
 
 	<!-- Header -->
 	<div class="home">
@@ -110,17 +122,129 @@ function star ( icon ) {
 			<div class="row">
 				<div class="col">
 					<div class="home_content">
-						<div class="home_title">Leaderboard</div>
+						<div class="home_title">Leaderboards</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<nav class="navbar navbar-inverse visible-xs">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#"></a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="myNavbar">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">Leaderboards</a></li>
+	        <li><a href="#">Average Finish</a></li>
+	        <li><a href="#">Miles Traveled to Races</a></li>
+	        <li><a href="#">Total Races</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+	
+	<div class="container-fluid">
+	  <div class="row content">
+	    <div class="col-sm-3 sidenav hidden-xs">
+	      <ul class="nav nav-pills nav-stacked">
+	        <a href="#section2">Average Finish</a>
+	        <a href="#section3">Miles Traveled to Races</a>
+	        <a href="#section3">Total Races</a>
+	      </ul>
+	    </div>
+  
 
 
 	<!-- Leaderboard -->
 	<div id="container">
-	<div class="col-lg-10"><h2>Average Finish <i class="fa fa-star-o" onClick="star(this)"></i></h2>
+	<form name= Leaderboard id="Average Finish">
+	<div class="col-lg-10" id="Average Finish"><h2>Average Finish <i class="fa fa-star-o" onClick="star(this)"></i></h2> 
+  	  <div class="row-lg-10">
+		   <div class="col col-lg-10 offset-sm-1">
+  	    <div class="name"><h4>Sailor</h4></div><div class="score"><h4>Score</h4></div>
+  	  </div>
+	   </div>
+
+	  <div class="row-lg-10">
+		   <div class="col-lg-10 offset-sm-1">
+	    <div class="name">Sailor1</div><div class="score">430</div>
+	  </div>
+	   </div>
+
+	  <div class="row-lg-10">
+		   <div class="col-lg-10 offset-sm-1">
+	    <div class="name">Sailor2</div><div class="score">580</div>
+	  </div>
+	   </div>
+
+	  <div class="row-lg-10">
+		  <div class="col-lg-10 offset-sm-1">
+	    <div class="name">Sailor3</div><div class="score">310</div>
+	</div>
+	  </div>
+
+	  <div class="row-lg-10">
+		   <div class="col-lg-10 offset-sm-1">
+	    <div class="name">Sailor4</div><div class="score">640</div>
+	  </div>
+	   </div>
+
+	  <div class="row-lg-10">
+		   <div class="col-lg-10 offset-sm-1">
+	    <div class="name">Sailor5</div><div class="score">495</div>
+	  </div>
+  </div>
+</form>
+	</div>
+
+	<div id="container">
+	<div class="col-lg-10"><h2>Miles Traveled to Races <i class="fa fa-star-o" onClick="star(this)"></i></h2>
+  	  <div class="row-lg-10">
+		   <div class="col col-lg-10 offset-sm-1">
+  	    <div class="name"><h4>Sailor</h4></div><div class="score"><h4>Score</h4></div>
+  	  </div>
+	   </div>
+
+	  <div class="row-lg-10">
+		   <div class="col-lg-10 offset-sm-1">
+	    <div class="name" id ="list">Sailor1</div><div class="score">430</div>
+	  </div>
+	   </div>
+
+	  <div class="row-lg-10">
+		   <div class="col-lg-10 offset-sm-1">
+	    <div class="name">Sailor2</div><div class="score">580</div>
+	  </div>
+	   </div>
+
+	  <div class="row-lg-10">
+		  <div class="col-lg-10 offset-sm-1">
+	    <div class="name">Sailor3</div><div class="score">310</div>
+	</div>
+	  </div>
+
+	  <div class="row-lg-10">
+		   <div class="col-lg-10 offset-sm-1">
+	    <div class="name">Sailor4</div><div class="score">640</div>
+	  </div>
+	   </div>
+
+	  <div class="row-lg-10">
+		   <div class="col-lg-10 offset-sm-1">
+	    <div class="name">Sailor5</div><div class="score">495</div>
+	  </div>
+  </div>
+	</div>
+
+	<div id="container">
+	<div class="col-lg-10"><h2>Total Races <i class="fa fa-star-o" onClick="star(this)"></i></h2>
   	  <div class="row-lg-10">
 		   <div class="col col-lg-10 offset-sm-1">
   	    <div class="name"><h4>Sailor</h4></div><div class="score"><h4>Score</h4></div>
@@ -158,84 +282,58 @@ function star ( icon ) {
   </div>
 	</div>
 
-	<!--div id="container">
-	 <div class="col-lg-10"><h2>NEISA Divison</h2>
-  	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-  	    <div class="name"><h4>Schools</h4></div><div class="score"><h4>Score</h4></div>
-  	  </div>
-	   </div>
+		
+<script language="javascript">
+function star ( icon ) {
+  $(icon).toggleClass('fa-star-o fa-star');
+  SaveItem();
+}
+</script>
+		
+<script>
+//add new key=>value to the HTML5 storage
+function SaveItem() {
+			
+	var name = document.getElementById("Average Finish").value;
+	var data = document.getElementById("data").value;
+	localStorage.setItem(name,data);
+	doShowAll();
+	
+}
 
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">School1</div><div class="score">430</div>
-	  </div>
-	   </div>
+function CheckBrowser() {
+	if ('localStorage' in window && window['localStorage'] !== null) {
+		// we can use localStorage object to store data
+		return true;
+	} else {
+			return false;
+	}
+}
 
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">School2</div><div class="score">580</div>
-	  </div>
-	   </div>
+function doShowAll() {
+	if (CheckBrowser()) {
+		var key = "";
+		var list = "<tr><th>Item</th><th>Value</th></tr>\n";
+		var i = 0;
+		//for more advance feature, you can set cap on max items in the cart
+		for (i = 0; i <= localStorage.length-1; i++) {
+			key = localStorage.key(i);
+			list += "<tr><td>" + key + "</td>\n<td>"
+					+ localStorage.getItem(key) + "</td></tr>\n";
+		}
+		//if no item exists in the cart
+		if (list == "<tr><th>Item</th><th>Value</th></tr>\n") {
+			list += "<tr><td><i>empty</i></td>\n<td><i>empty</i></td></tr>\n";
+		}
+		//bind the data to html table
+		//you can use jQuery too....
+		document.getElementById('list').innerHTML = list;
+	} else {
+		alert('Cannot save shopping list as your browser does not support HTML 5');
+	}
+}
 
-	  <div class="row-lg-10">
-		  <div class="col-lg-10 offset-sm-1">
-	    <div class="name">School3</div><div class="score">310</div>
-	</div>
-	  </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">School4</div><div class="score">640</div>
-	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">School5</div><div class="score">495</div>
-	  </div>
-  </div>
-	</div>
-
-<div id="container">
-	<div class="col-lg-10"><h2>SAISA Divison</h2>
- 	  <div class="row-lg-10 ">
-	   <div class="col-lg-10 offset-sm-1">
- 	    <div class="name"><h4>Schools</h4></div><div class="score"><h4>Score</h4></div>
- 	  </div>
-   </div>
-
-  <div class="row-lg-10">
-	   <div class="col-lg-10 offset-sm-1">
-    <div class="name">School1</div><div class="score">430</div>
-  </div>
-   </div>
-
-  <div class="row-lg-10">
-	   <div class="col-lg-10 offset-sm-1">
-    <div class="name">School2</div><div class="score">580</div>
-  </div>
-   </div>
-
-  <div class="row-lg-10">
-	  <div class="col-lg-10 offset-sm-1">
-    <div class="name">School3</div><div class="score">310</div>
-</div>
-  </div>
-
-  <div class="row-lg-10">
-	   <div class="col-lg-10 offset-sm-1">
-    <div class="name">School4</div><div class="score">640</div>
-  </div>
-   </div>
-
-  <div class="row-lg-10">
-	   <div class="col-lg-10 offset-sm-1">
-    <div class="name">School5</div><div class="score">495</div>
-  </div>
- </div>
-</div-->
-
+</script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap-4.1.2/popper.js"></script>
 <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
