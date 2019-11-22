@@ -15,6 +15,12 @@
 <link rel="stylesheet" type="text/css" href="styles/about.css">
 <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
 
+<script language="javascript">
+function star ( icon ) {
+  $(icon).toggleClass('fa-star-o fa-star');
+}
+</script>
+
 <style>
 	#container {
 	  width: auto;
@@ -114,7 +120,7 @@
 
 	<!-- Leaderboard -->
 	<div id="container">
-	<div class="col-lg-10"><h2>Average Finish</h2>
+	<div class="col-lg-10"><h2>Average Finish <i class="fa fa-star-o" onClick="star(this)"></i></h2>
   	  <div class="row-lg-10">
 		   <div class="col col-lg-10 offset-sm-1">
   	    <div class="name"><h4>Sailor</h4></div><div class="score"><h4>Score</h4></div>
