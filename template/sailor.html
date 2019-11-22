@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-<title>Sailor</title>
+<title id="nameheader">Sailor</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="BHost template project">
@@ -74,47 +74,130 @@
 			<div class="row">
 				<div class="col">
 					<div class="home_content">
-						<div class="home_title">Sailor Name</div>
+						<div class="home_title" id="name">Sailor Name</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
 	</div>
+<h class="tableheader" >Stats:</h>
+<hr>
+<table class="stats-table">
+<tbody id = "tablebody">
+	<tr><td class="cellheader">School</td><br><td id="school"></td></tr>
+	<tr><td class="cellheader">Graduation Year</td><td id="grad"></td></tr>
+	<tr><td class="cellheader">Regattas Attended</td><td id="regattas"></td></tr>
+	<tr><td class="cellheader">Average Finish</td><td id="finish"></td></tr>
+	<tr><td class="cellheader">Perentage Regattas Sailed</td><td id="sailed"></td></tr>
+</tbody>
+</table>
 
-	<div class="row">
-		<div class="col-sm-3" align="center">
-			<div class="well">
-				<h3>Average Finish Place</h3>
-				<img>
-				<p>1st</p>
-			</div>
-		</div>
-		<div class="col-sm-3" align="center">
-			<div class="well">
-				<h3>Miles Traveled to Races</h3>
-				<p>100 Million</p>
-			</div>
-		</div>
-		<div class="col-sm-3" align="center">
-			<div class="well">
-				<h3>Total Races</h3>
-				<p>10 Million</p>
-			</div>
-		</div>
-		<div class="col-sm-3" align="center">
-			<div class="well">
-				<h3>Awards</h3>
-				<p>Traveled to 100+ races</p>
-			</div>
-		</div>
-	</div>
-
+<h class="tableheader" >Regattas:</h>
+<hr>
+<canvas id="myChart" height="100"></canvas>
 
 
 
 
 <script src="js/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-deferred"></script> -->
+
+<script>//Waits until html is loaded.
+function dtu(str){
+	output = "";
+	str.match(/(\w+)/g).forEach((element)=>{
+		output+= element.charAt(0).toUpperCase() + element.slice(1) + " ";
+	});
+	return output;
+}
+	$(document).ready(function(){
+		params = {};
+	  location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(s, k, v) {
+	    	params[k] = v
+	  })
+
+		$.ajax({
+			type: "GET",
+			//dataType: "text",
+			url:"https://teqr5x3h2h.execute-api.us-east-1.amazonaws.com/dev/sailor-request",
+			data:{uuid: params['uuid']},
+			success: function(data){
+				name = dtu(data['sailor-uuid']);
+				$("#name").text(name);
+				$("#nameheader").text("Stats | " + name);
+				$("#school").text(data['home']);
+				$("#grad").text(data['grad_year']);
+				$("#regattas").text(data['regatta_count']);
+				$("#finish").text(data['average_finish']);
+				$("#sailed").text(data['sail_percentage']+"%");
+
+				regattaLabels = [];
+				finish = [];
+
+				 for(var regatta in data['regattas']){
+					 //We regex clean the label and add it to the array.
+					 cleanLabel = regatta.match(/\w\d\d\/(.*)\//);
+					 regattaLabels.push(dtu(cleanLabel[1]));
+					 //Now we regex clean the finish, if it is n/a we make it null, otherwise we take the finish.
+					 dirtyFinish = data['regattas'][regatta]['finish'];
+					 if(dirtyFinish == "N/A"){
+						 dirtyFinish = null;
+					 }
+					 else{
+						 	dirtyFinish = dirtyFinish.match(/(^\d{1,2})/g)[0];
+					 }
+					 finish.push(dirtyFinish);
+				 }
+				var ctx = $("#myChart");
+				var chart = new Chart(ctx, {
+
+				    // The type of chart we want to create
+				    type: 'line',
+
+				    // The data for our dataset
+				    data: {
+				        labels: regattaLabels.reverse(),
+				        datasets: [{
+										label: 'Regatta Finishes',
+										lineTension: 0,
+				            backgroundColor: 'rgb(156, 83, 240)',
+				            borderColor: 'rgb(256, 256, 256)',
+				            data: finish.reverse()
+				        }]
+				    },
+
+				    // Configuration options go here
+				    options: {
+							spanGaps: true,
+							bezierCurve: false,
+							scales: {
+								yAxes: [{
+									scaleLabel: {
+										display:true,
+										labelString: "Regatta Name",
+										fontStyle: "bold"
+									}
+								}],
+								xAxes: [{
+									scaleLabel: {
+										display:true,
+										labelString: "Finish",
+										fontStyle: "bold"
+									}
+								}],
+							}
+						}
+				});
+
+			},
+			error: function(data){
+				console.log(data)
+				},
+			});
+		});//end ajax
+</script>
 <script src="styles/bootstrap-4.1.2/popper.js"></script>
 <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
 <script src="plugins/greensock/TweenMax.min.js"></script>

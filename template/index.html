@@ -46,7 +46,7 @@
 						<li><a href="login.html">Login</a></li>
 					</ul>
 				</div>
-				
+
 
 				<!-- Hamburger -->
 				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -74,18 +74,18 @@
 	<!-- Home -->
 
 	<div class="home">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/boat.jpg" data-speed="0.8"></div>
+		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/charleston.jpg" data-speed="0.8"></div>
 		<div class="home_container">
 			<div class="container">
 				<div class="row">
 					<div class="col">
 						<div class="home_content text-center">
-							<div class="home_title">Sailing Scores</div>
+							<div class="home_title">SAILINGScores</div>
 							<div class="domain_search">
 								<div class="domain_search_background"></div>
-								<form action="#" class="domain_search_form" id="domain_search_form">
-									<input type="text" class="domain_search_input" placeholder="Search School or Sailor" required="required">
-									<button class="domain_search_button">search</button>
+								<form class="domain_search_form">
+									<input type="text" class="domain_search_input" placeholder="Search Sailor" required="required" id="search-bar">
+									<button class="domain_search_button" id ="search-button">search</button>
 								</form>
 							</div>
 						</div>
@@ -95,8 +95,22 @@
 		</div>
 	</div>
 
+<!-- Error modal -->
+<!-- The Modal -->
+<div id="errorModal" class="modal">
 
-
+  <!-- Modal content -->
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <h2>Unable to find specified sailor.</h2>
+			 <span class="close">&times;</span>
+	  </div>
+	  <div class="modal-body">
+	    <p class="help-text">&emsp;&emsp;To find a sailors unique id go to <b><a href = "https://scores.collegesailing.org/">scores.collegesailing.org</a></b> and search for the sailors name. Their unique ID is the last item in the address bar. Enter just the sailor-uuid without the slashes.</p>
+			<div><img src="images/uuidexample.png" class="help-img"></div>
+	</div>
+</div>
+</div>
 	<!-- Why Choose Us -->
 
 	<div class="why">
@@ -121,6 +135,38 @@
 </div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
+<script>//Waits until html is loaded.
+$(document).ready(function(){
+	$("#search-button").click(function(event){
+		event.preventDefault();
+		$.ajax({
+			type: "GET",
+			//dataType: "text",
+			url:"https://teqr5x3h2h.execute-api.us-east-1.amazonaws.com/dev/sailor-retrieve",
+			data:{uuid: $("#search-bar").val()},
+			success: function(data){
+				console.log(data)
+				window.location.href = "sailor.html" + data['url'];
+			},
+			error: function(data){
+				var modal = document.getElementById("errorModal");
+				var span = document.getElementsByClassName("close")[0];
+				modal.style.display = "block";
+
+				span.onclick = function() {
+					modal.style.display = "none";
+				}
+
+				window.onclick = function(event) {
+					if (event.target == modal) {
+						modal.style.display = "none";
+					}
+				}
+			},
+		});//end ajax
+	});
+});
+</script>
 <script src="styles/bootstrap-4.1.2/popper.js"></script>
 <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
 <script src="plugins/greensock/TweenMax.min.js"></script>
