@@ -11,9 +11,9 @@ except pymysql.MySQLError as e:
 
 def lambda_handler(event, context):
     parameters = event['queryStringParameters']
-    return sailor_request(parameters['column'], parameters['count'], parameters['op'])
+    return populate(parameters['team'], parameters['season'])
 
-def sailor_request(column, count, op):
+def populate(column, count, op):
         #If we can't connect to the database we just return a 500.
     if not connection:
         return lambdareturn("Unable to connect to datebase", 500)
