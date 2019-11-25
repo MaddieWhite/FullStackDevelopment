@@ -15,11 +15,16 @@
 <link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/about.css">
 <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
-<script language="javascript">
-function star ( icon ) {
-  $(icon).toggleClass('fa-star-o fa-star');
-}
-</script>
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="js/amazon-cognito-auth.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+	<script src="js/amazon-cognito-identity.min.js"></script>
+	<script src="js/config.js"></script>
+
+
+
 </head>
 <body>
 
@@ -79,7 +84,7 @@ function star ( icon ) {
 			<div class="row">
 				<div class="col">
 					<div class="home_content">
-						<div class="home_title">Sailor Name<i class="fa fa-star-o" onClick="star(this)"></i></div>
+						<div class="home_title" id= "name">Sailor Name<i class="fa fa-star-o" onClick="star(this)"></i></div>
 						
 					</div>
 				</div>
@@ -117,7 +122,53 @@ function star ( icon ) {
 	</div>
 
 
+<script language="javascript">
+function star ( icon ) {
+	//var link = document.createElement('a');
+	//link.setAttribute('href', 'file:///Users/juliagoyco/Documents/GitHub/FullStackDevelopment1/template/sailor.html');
+	//link.innerHTML = "Sailor 1";//document.getElementById("name");
+	//document.body.appendChild(link);
+  s();
+  $(icon).toggleClass('fa-star-o fa-star');
+}
 
+function s(){
+//var AWS = require("aws-sdk");
+
+AWS.config.update({
+  //credentials: new AWS.CognitoIdentityCredentials({
+	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
+	  accessKeyId: "AKIAJZA4K4CGUJQRQIKQ",
+	   secretAccessKey: "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",
+  region: "us-east-1",
+  endpoint: "dynamodb.us-east-1.amazonaws.com"
+});
+
+var table = "SailingScoresUserFavorites";
+
+var docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
+
+var Username = "email";
+var Fav = "Sailor 1";//document.getElementsByClassName("home-tile")[0];
+
+var params = {
+    TableName:table,
+    Item:{
+        "Username": Username,
+        "Favorites": Fav,
+    }
+};
+
+console.log("Adding a new item...");
+docClient.put(params, function(err, data) {
+    if (err) {
+        console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Added item:", JSON.stringify(data, null, 2));
+    }
+});
+}
+</script>
 
 
 <script src="js/jquery-3.2.1.min.js"></script>
