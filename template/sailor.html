@@ -116,8 +116,10 @@
     </table>
 
     <h class="tableheader">Regattas:</h>
+    <br><small class="ml-3">A green trendline indicates a positive trend, red a negative one.</small>
     <hr>
     <canvas id="myChart" height="100"></canvas>
+
 
 
 
@@ -160,8 +162,8 @@
             $("#school").text(data['home']);
             $("#grad").text(data['grad_year']);
             $("#regattas").text(data['regatta_count']);
-            $("#finish").text(data['average_finish']);
-            $("#sailed").text(data['sail_percentage'] + "%");
+            $("#finish").text(data['average_finish'].toFixed(1));
+            $("#sailed").text(data['sail_percentage'].toFixed(1) + "%");
 
             //Make a array of regattas and an array of finishes to graph.
             regattaLabels = [];
@@ -225,9 +227,9 @@
             //If their regression is getting better, we can pick one color, if it is getting worse we can pick another.
             //Right now they are the same color because I couldn't choose.
             if (lr['slope'] >= 0) {
-              lr['color'] = 'rgb(75, 119, 238)';
+              lr['color'] = 'red';
             } else {
-              lr['color'] = 'rgb(75, 119, 238)';
+              lr['color'] = 'green';
             }
 
             //We create a chart

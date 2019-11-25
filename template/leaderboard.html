@@ -133,6 +133,7 @@
                 <tr>
                   <th scope='col'>Rank</th>
                   <th scope='col'>Name</th>
+                  <th scope='col'>School</th>
                   <th scope='col'>Average Finish</th>
                 </tr>
               </thead>
@@ -151,6 +152,7 @@
                 <tr>
                   <th scope='col'>Rank</th>
                   <th scope='col'>Name</th>
+                  <th scope='col'>School</th>
                   <th scope='col'>Regattas Sailed</th>
                 </tr>
               </thead>
@@ -169,6 +171,7 @@
                 <tr>
                   <th scope='col'>Rank</th>
                   <th scope='col'>Name</th>
+                  <th scope='col'>School</th>
                   <th scope='col'>Sail Percentage</th>
                 </tr>
               </thead>
@@ -188,6 +191,7 @@
                 <tr>
                   <th scope='col'>Rank</th>
                   <th scope='col'>Name</th>
+                  <th scope='col'>School</th>
                   <th scope='col'>Travel Time</th>
                 </tr>
               </thead>
@@ -197,7 +201,7 @@
             </table>
           </div>
         </div>
-
+              <small class="mb-4 pl-2" >To be included in a leaderboard, you must have gone to ten or more regattas.</small>
       </div>
     </div>
 
@@ -224,10 +228,16 @@
           //If succsessful we parse the data
           success: function(data) {
             for (i = 0; i < data.length; i++) {
+              id = data[i][0];
               rank = "#" + (i + 1);
               name = dtu(data[i][0]);
-              stat = data[i][columnNum];
-              row = '<tr><th scope="row">' + rank + '</th><td>' + name + '</td><td>' + stat + '</td></tr>';
+              school = data[i][1];
+              if (typeof data[i][columnNum] == "number") {
+                stat = data[i][columnNum].toFixed(1);
+              } else {
+                stat = data[i][columnNum];
+              }
+              row = '<tr><th scope="row">' + rank + '</th><td><a href="sailor.html?uuid=' + id + '">' + name + '</a></td><td>' + school + '</td><td>' + stat + '</td></tr>';
               $("#" + tableID).append(row);
             }
           },
@@ -239,9 +249,9 @@
 
       $(document).ready(function() {
         //Begin our ajax request
-        populateTable("sail_percent", 10, "asc", 5, "sailp")
-        populateTable("average_finish ", 10, "asc", 2, "averagef")
-        populateTable("regatta_count", 10, "desc", 4, "regattas")
+        populateTable("sail_percent", 15, "asc", 5, "sailp")
+        populateTable("average_finish ", 15, "asc", 2, "averagef")
+        populateTable("regatta_count", 15, "desc", 4, "regattas")
 
       });
     </script>
