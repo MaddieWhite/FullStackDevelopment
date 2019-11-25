@@ -76,7 +76,7 @@ p a
 	display: inline;
 	position: relative;
 	color: inherit;
-	border-bottom: solid 1px #ffa07f;
+	border-bottom: solid 1px #9c53f0;
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
 	-ms-transition: all 200ms ease;
@@ -110,7 +110,7 @@ p a:active
 p a:hover
 {
 	color: #FFFFFF;
-	background: #ffa07f;
+	background: #9c53f0;
 }
 p a:hover::after
 {
@@ -123,7 +123,7 @@ p a:hover::after
 }
 p::selection
 {
-	
+
 }
 h1{font-size: 48px;}
 h2{font-size: 36px;}
@@ -140,14 +140,14 @@ h1, h2, h3, h4, h5, h6
 	color: #2c2c2c;
 	font-weight: 600;
 }
-h1::selection, 
-h2::selection, 
-h3::selection, 
-h4::selection, 
-h5::selection, 
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
 h6::selection
 {
-	
+
 }
 .form-control
 {
@@ -536,6 +536,7 @@ section
 	color: #FFFFFF;
 	line-height: 1.2;
 	margin-top: 42px;
+	text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -2px black;
 }
 .domain_search
 {
@@ -560,6 +561,16 @@ section
 	position: relative;
 	width: 100%;
 }
+
+.help-img{
+	max-width:100%;
+	max-height:100%;
+}
+.help-text{
+		font-size: 18px;
+		font-style: "bold";
+}
+
 .domain_search_input
 {
 	width: 100%;
@@ -590,9 +601,9 @@ section
 	font-size: 18px !important;
 	font-weight: 500 !important;
 	color: #6b6b6b !important;
-} 
+}
 .domain_search_input:-ms-input-placeholder
-{ 
+{
 	font-size: 18px !important;
 	font-weight: 500 !important;
 	color: #6b6b6b !important;
@@ -1039,7 +1050,7 @@ section
 }
 .content_list_2
 {
-	
+
 }
 .c_left_list
 {

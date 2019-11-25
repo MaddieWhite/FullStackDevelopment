@@ -28,16 +28,16 @@ def sailor_parse(uuid):
         if response is None:
             print("adding")
             single_database_add(uuid)
-            return lambdareturn(f"?uuid={uuid}")
+            return lambdareturn(json.dumps(dict(url = f"?uuid={uuid}")))
         #Then check how old their last update was, if it is older than 7 days, we run an update function, otherwise we do nothing.
         else:
             currentDate = datetime.datetime.now()
             if (response[0] + datetime.timedelta(days=7)) >= currentDate:
                 print("updated within 7 days")
-                return lambdareturn(f"?uuid={uuid}")
+                return lambdareturn(json.dumps(dict(url = f"?uuid={uuid}")))
         single_database_update(uuid)
         print("updating")
-        return lambdareturn(f"?uuid={uuid}")
+        return lambdareturn(json.dumps(dict(url = f"?uuid={uuid}")))
 
 #Adds a sailor to the database
 ## TODO: Error handling for invalid sailor uuids.
@@ -102,7 +102,5 @@ def lambdareturn(body, status=200):
     'headers':{"Access-Control-Allow-Origin":"*",},
     "isBase64Encoded": False,
     'statusCode': status,
-    'body': json.dumps(body)
+    'body': body
     }
-
-print(sailor_parse("thomas-walker"))

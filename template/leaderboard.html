@@ -1,309 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>Leaderboard</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="BHost template project">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.2/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-<link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="styles/about.css">
-<link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
+  <title>Leaderboard</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="BHost template project">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.2/bootstrap.min.css">
+  <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+  <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+  <link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="styles/about.css">
+  <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
 
-<script language="javascript">
-function star ( icon ) {
-  //SaveItem();
-  $(icon).toggleClass('fa-star-o fa-star');
+  <script language="javascript">
+    function star(icon) {
+      $(icon).toggleClass('fa-star-o fa-star');
+    }
+  </script>
 
-}
-</script>
-		
-
-<style>
-	#container {
-	  width: auto;
-	  height: auto;
-	}
-
-	.row-lg-10 {
-	  position: 600px;
-	  display: inline-block;
-	  width: 100%;
-	  height: 40px;
-	  border-bottom: 1px solid #AFAFAF;
-	}
-
-	.name {
-	  position: relative;
-	  display: inline-block;
-	  width: 75%;
-	  line-height: 45px;
-	}
-
-	.score {
-	  position: relative;
-	  display: inline-block;
-	  width: 25%;
-	}
-</style>
-
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-   <style>
-     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-     .row.content {height: 550px}
-
-     /* Set gray background color and 100% height */
-     .sidenav {
-       background-color: #f1f1f1;
-       height: 100%;
-     }
-
-     /* On small screens, set height to 'auto' for the grid */
-     @media screen and (max-width: 767px) {
-       .row.content {height: auto;}
-     }
-   </style>
+  <style>
+    #container {
+      width: auto;
+      height: auto;
+    }
+    .row-lg-10 {
+      position: 600px;
+      display: inline-block;
+      width: 100%;
+      height: 40px;
+      border-bottom: 1px solid #AFAFAF;
+    }
+    .name {
+      position: relative;
+      display: inline-block;
+      width: 75%;
+      line-height: 45px;
+    }
+    .score {
+      position: relative;
+      display: inline-block;
+      width: 25%;
+    }
+  </style>
 
 </head>
+
 <body>
 
-<div class="super_container">
+  <div class="super_container">
 
-	<!-- Header -->
+    <!-- Header -->
 
-	<header class="header trans_400">
-		<div class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
-			<div class="logo"><a href="index.html"><span>sailing</span>Scores</a></div>
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-10 offset-lg-2">
-						<nav class="main_nav">
-							<ul class="d-flex flex-row align-items-center justify-content-start">
-								<li><a href="index.html">Home</a></li>
-								<li><a href="schools.html">Schools</a></li>
-								<li><a href="leaderboard.html">Leaderboard</a></li>
-								<!--li><a href="blog.html">News</a></li>
+    <header class="header trans_400">
+      <div class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
+        <div class="logo"><a href="index.html"><span>sailing</span>Scores</a></div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-10 offset-lg-2">
+              <nav class="main_nav">
+                <ul class="d-flex flex-row align-items-center justify-content-start">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="schools.html">Schools</a></li>
+                  <li><a href="leaderboard.html">Leaderboard</a></li>
+                  <!--li><a href="blog.html">News</a></li>
 								<li><a href="contact.html">Contact</a></li> -->
-							</ul>
-						</nav>
-					</div>
-				</div>
-			</div>
-			<div class="header_right d-flex flex-row align-items-center justify-content-start">
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div class="header_right d-flex flex-row align-items-center justify-content-start">
 
-				<!-- Header Links -->
-				<div class="header_links">
-					<ul class="d-flex flex-row align-items-center justify-content-start">
-						<li><a href="login.html">Login</a></li>
-					</ul>
-				</div>
+          <!-- Header Links -->
+          <div class="header_links">
+            <ul class="d-flex flex-row align-items-center justify-content-start">
+              <li><a href="login.html">Login</a></li>
+            </ul>
+          </div>
 
-				<!-- Hamburger -->
-				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
-			</div>
-		</div>
-	</header>
+          <!-- Hamburger -->
+          <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
+        </div>
+      </div>
+    </header>
 
-	<!-- Menu -->
+    <!-- Menu -->
 
-	<div class="menu trans_500">
-		<div class="menu_content d-flex flex-column align-items-center justify-content-center">
-			<div class="menu_nav trans_500">
-				<ul class="text-center">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="schools.html">Schools</a></li>
-	                <li><a href="leaderboard.html">Leaderboards</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
-	<!-- Header -->
-	<div class="home">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="home_content">
-						<div class="home_title">Leaderboards</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<nav class="navbar navbar-inverse visible-xs">
-	  <div class="container-fluid">
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
-	      <a class="navbar-brand" href="#"></a>
-	    </div>
-	    <div class="collapse navbar-collapse" id="myNavbar">
-	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="#">Leaderboards</a></li>
-	        <li><a href="#">Average Finish</a></li>
-	        <li><a href="#">Miles Traveled to Races</a></li>
-	        <li><a href="#">Total Races</a></li>
-	      </ul>
-	    </div>
-	  </div>
-	</nav>
-	
-	<!--div class="container-fluid">
-	  <div class="row content">
-	    <div class="col-sm-3 sidenav hidden-xs">
-	      <ul class="nav nav-pills nav-stacked">
-	        <a href="#section2">Average Finish</a>
-	        <a href="#section3">Miles Traveled to Races</a>
-	        <a href="#section3">Total Races</a>
-	      </ul>
-	    </div-->
-  
+    <div class="menu trans_500">
+      <div class="menu_content d-flex flex-column align-items-center justify-content-center">
+        <div class="menu_nav trans_500">
+          <ul class="text-center">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="schools.html">Schools</a></li>
+            <li><a href="leaderboard.html">Leaderboard</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
 
-	<!-- Leaderboard -->
-	<div id="container">
-	<form name= Leaderboard id="Average Finish">
-	<div class="col-lg-10" id="Average Finish"><h2>Average Finish <i class="fa fa-star-o" onClick="star(this)"></i></h2> 
-  	  <div class="row-lg-10">
-		   <div class="col col-lg-10 offset-sm-1">
-  	    <div class="name"><h4>Sailor</h4></div><div class="score"><h4>Score</h4></div>
-  	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor1</div><div class="score">430</div>
-	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor2</div><div class="score">580</div>
-	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		  <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor3</div><div class="score">310</div>
-	</div>
-	  </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor4</div><div class="score">640</div>
-	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor5</div><div class="score">495</div>
-	  </div>
-  </div>
-</form>
-	</div>
-
-	<div id="container">
-	<div class="col-lg-10"><h2>Miles Traveled to Races <i class="fa fa-star-o" onClick="star(this)"></i></h2>
-  	  <div class="row-lg-10">
-		   <div class="col col-lg-10 offset-sm-1">
-  	    <div class="name"><h4>Sailor</h4></div><div class="score"><h4>Score</h4></div>
-  	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name" id ="list">Sailor1</div><div class="score">430</div>
-	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor2</div><div class="score">580</div>
-	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		  <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor3</div><div class="score">310</div>
-	</div>
-	  </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor4</div><div class="score">640</div>
-	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor5</div><div class="score">495</div>
-	  </div>
-  </div>
-	</div>
-
-	<div id="container">
-	<div class="col-lg-10"><h2>Total Races <i class="fa fa-star-o" onClick="star(this)"></i></h2>
-  	  <div class="row-lg-10">
-		   <div class="col col-lg-10 offset-sm-1">
-  	    <div class="name"><h4>Sailor</h4></div><div class="score"><h4>Score</h4></div>
-  	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor1</div><div class="score">430</div>
-	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor2</div><div class="score">580</div>
-	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		  <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor3</div><div class="score">310</div>
-	</div>
-	  </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor4</div><div class="score">640</div>
-	  </div>
-	   </div>
-
-	  <div class="row-lg-10">
-		   <div class="col-lg-10 offset-sm-1">
-	    <div class="name">Sailor5</div><div class="score">495</div>
-	  </div>
-  </div>
-	</div>
+    <!-- Header -->
+    <div class="home">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="home_content">
+              <div class="home_title">Leaderboards</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
+    <!-- Leaderboard -->
+    <div class="container">
+      <div class="row">
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap-4.1.2/popper.js"></script>
-<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
-<script src="plugins/greensock/TweenMax.min.js"></script>
-<script src="plugins/greensock/TimelineMax.min.js"></script>
-<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
-<script src="plugins/greensock/animation.gsap.min.js"></script>
-<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/progressbar/progressbar.min.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="js/services.js"></script>
+
+        <div class="col-md-6">
+          <div class="w-95 mt-2">
+            <table class="table table-bordered table-hover" id='averagef'>
+              <caption>Average Finish</caption>
+              <thead class='thead-dark'>
+                <tr>
+                  <th scope='col'>Rank</th>
+                  <th scope='col'>Name</th>
+                  <th scope='col'>Average Finish</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Rows will populate here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="w-95 mt-2">
+            <table class="table table-bordered table-hover" id="regattas">
+              <caption>Regattas Sailed</caption>
+              <thead class='thead-dark'>
+                <tr>
+                  <th scope='col'>Rank</th>
+                  <th scope='col'>Name</th>
+                  <th scope='col'>Regattas Sailed</th>
+                </tr>
+              </thead>
+              <tbody id="averagefinishbody">
+                <!-- Rows will populate here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="w-95 mt-2">
+            <table class="table table-bordered table-hover" id="sailp">
+              <caption>Sail Percentage</caption>
+              <thead class='thead-dark'>
+                <tr>
+                  <th scope='col'>Rank</th>
+                  <th scope='col'>Name</th>
+                  <th scope='col'>Sail Percentage</th>
+                </tr>
+              </thead>
+              <tbody id="averagefinishbody">
+                <!-- Rows will populate here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+        <div class="col-md-6">
+          <div class="w-95 mt-2">
+            <table class="table table-bordered table-hover" id='averagef'>
+              <caption>Travel Time</caption>
+              <thead class='thead-dark'>
+                <tr>
+                  <th scope='col'>Rank</th>
+                  <th scope='col'>Name</th>
+                  <th scope='col'>Travel Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Rows will populate here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script>
+      //Useful function that uppercases the first letter of each word in a word-word-word string.
+      function dtu(str) {
+        output = "";
+        str.match(/([\w\d]+)/g).forEach((element) => {
+          output += element.charAt(0).toUpperCase() + element.slice(1) + " ";
+        });
+        return output;
+      }
+      function populateTable(column, count, op, columnNum, tableID) {
+        $.ajax({
+          type: "GET",
+          url: "https://teqr5x3h2h.execute-api.us-east-1.amazonaws.com/dev/leaderboard",
+          data: {
+            column: column,
+            count: count,
+            op: op
+          },
+          //If succsessful we parse the data
+          success: function(data) {
+            for (i = 0; i < data.length; i++) {
+              rank = "#" + (i + 1);
+              name = dtu(data[i][0]);
+              stat = data[i][columnNum];
+              row = '<tr><th scope="row">' + rank + '</th><td>' + name + '</td><td>' + stat + '</td></tr>';
+              $("#" + tableID).append(row);
+            }
+          },
+          error: function(data) {
+            console.log(data)
+          },
+        });
+      }
+      $(document).ready(function() {
+        //Begin our ajax request
+        populateTable("sail_percent", 10, "asc", 5, "sailp")
+        populateTable("average_finish ", 10, "asc", 2, "averagef")
+        populateTable("regatta_count", 10, "desc", 4, "regattas")
+      });
+    </script>
+    <script src="styles/bootstrap-4.1.2/popper.js"></script>
+    <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+    <script src="plugins/greensock/TweenMax.min.js"></script>
+    <script src="plugins/greensock/TimelineMax.min.js"></script>
+    <script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="plugins/greensock/animation.gsap.min.js"></script>
+    <script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="plugins/easing/easing.js"></script>
+    <script src="plugins/progressbar/progressbar.min.js"></script>
+    <script src="plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="js/services.js"></script>
 </body>
+
 </html>

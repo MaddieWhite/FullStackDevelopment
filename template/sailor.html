@@ -1,190 +1,328 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<title>Sailor</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="BHost template project">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.2/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-<link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="styles/about.css">
-<link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
-<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
-
-	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="js/amazon-cognito-auth.min.js"></script>
-	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
-	<script src="js/amazon-cognito-identity.min.js"></script>
-	<script src="js/config.js"></script>
-
-
-
+  <title id="nameheader">Sailor</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="BHost template project">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.2/bootstrap.min.css">
+  <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+  <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+  <link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="styles/about.css">
+  <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
+  <script language="javascript">
+    function star(icon) {
+      $(icon).toggleClass('fa-star-o fa-star');
+    }
+  </script>
 </head>
+
 <body>
 
-<div class="super_container">
+  <div class="super_container">
 
-	<!-- Header -->
+    <!-- Header -->
 
-	<header class="header trans_400">
-		<div class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
-			<div class="logo"><a href="index.html"><span>sailing</span>Scores</a></div>
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-10 offset-lg-2">
-						<nav class="main_nav">
-							<ul class="d-flex flex-row align-items-center justify-content-start">
-                <li><a href="index.html">Home</a></li>
-								<li><a href="schools.html">Schools</a></li>
-								<li><a href="leaderboard.html">Leaderboard</a></li>
-							</ul>
-						</nav>
-					</div>
-				</div>
-			</div>
-			<div class="header_right d-flex flex-row align-items-center justify-content-start">
+    <header class="header trans_400">
+      <div class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
+        <div class="logo"><a href="index.html"><span>sailing</span>Scores</a></div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-10 offset-lg-2">
+              <nav class="main_nav">
+                <ul class="d-flex flex-row align-items-center justify-content-start">
+                  <li ><a href="index.html">Home</a></li>
+                  <li ><a href="schools.html">Schools</a></li>
+                  <li ><a href="leaderboard.html">Leaderboard</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div class="header_right d-flex flex-row align-items-center justify-content-start">
 
-				<!-- Header Links -->
-				<div class="header_links">
-					<ul class="d-flex flex-row align-items-center justify-content-start">
-						<li><a href="login.html">Login</a></li>
-					</ul>
-				</div>
+          <!-- Header Links -->
+          <div class="header_links">
+            <ul class="d-flex flex-row align-items-center justify-content-start">
+              <li><a href="login.html">Login</a></li>
+            </ul>
+          </div>
 
-				<!-- Hamburger -->
-				<div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
-			</div>
-		</div>
-	</header>
+          <!-- Hamburger -->
+          <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
+        </div>
+      </div>
+    </header>
 
-	<!-- Menu -->
+    <!-- Menu -->
 
-	<div class="menu trans_500">
-		<div class="menu_content d-flex flex-column align-items-center justify-content-center">
-			<div class="menu_nav trans_500">
-				<ul class="text-center">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="about.html">Schools</a></li>
-          <li><a href="leaderboard.html">Leaderboard</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+    <div class="menu trans_500">
+      <div class="menu_content d-flex flex-column align-items-center justify-content-center">
+        <div class="menu_nav trans_500">
+          <ul class="text-center">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">Schools</a></li>
+            <li><a href="leaderboard.html">Leaderboard</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-	<!-- Home -->
+    <!-- Home -->
 
-	<div class="home">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="home_content">
-						<div class="home_title" id= "name">Sailor Name<i class="fa fa-star-o" onClick="star(this)"></i></div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
+    <div class="home">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="home_content">
+              <div class="home_title" id="name">Sailor Name</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-	</div>
+    </div>
+    <h class="tableheader">Stats:</h>
+    <hr>
+    <table class="stats-table">
+      <tbody id="tablebody">
+        <tr>
+          <td class="cellheader">School</td><br>
+          <td id="school"></td>
+        </tr>
+        <tr>
+          <td class="cellheader">Graduation Year</td>
+          <td id="grad"></td>
+        </tr>
+        <tr>
+          <td class="cellheader">Regattas Attended</td>
+          <td id="regattas"></td>
+        </tr>
+        <tr>
+          <td class="cellheader">Average Finish</td>
+          <td id="finish"></td>
+        </tr>
+        <tr>
+          <td class="cellheader">Perentage Regattas Sailed</td>
+          <td id="sailed"></td>
+        </tr>
+      </tbody>
+    </table>
 
-	<div class="row">
-		<div class="col-sm-3" align="center">
-			<div class="well">
-				<h3>Average Finish Place</h3>
-				<img>
-				<p>1st</p>
-			</div>
-		</div>
-		<div class="col-sm-3" align="center">
-			<div class="well">
-				<h3>Miles Traveled to Races</h3>
-				<p>100 Million</p>
-			</div>
-		</div>
-		<div class="col-sm-3" align="center">
-			<div class="well">
-				<h3>Total Races</h3>
-				<p>10 Million</p>
-			</div>
-		</div>
-		<div class="col-sm-3" align="center">
-			<div class="well">
-				<h3>Awards</h3>
-				<p>Traveled to 100+ races</p>
-			</div>
-		</div>
-	</div>
-
-
-<script language="javascript">
-function star ( icon ) {
-	//var link = document.createElement('a');
-	//link.setAttribute('href', 'file:///Users/juliagoyco/Documents/GitHub/FullStackDevelopment1/template/sailor.html');
-	//link.innerHTML = "Sailor 1";//document.getElementById("name");
-	//document.body.appendChild(link);
-  s();
-  $(icon).toggleClass('fa-star-o fa-star');
-}
-
-function s(){
-//var AWS = require("aws-sdk");
-
-AWS.config.update({
-  //credentials: new AWS.CognitoIdentityCredentials({
-	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
-	  accessKeyId: "AKIAJZA4K4CGUJQRQIKQ",
-	   secretAccessKey: "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",
-  region: "us-east-1",
-  endpoint: "dynamodb.us-east-1.amazonaws.com"
-});
-
-var table = "SailingScoresUserFavorites";
-
-var docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
-
-var Username = "email";
-var Fav = "Sailor 1";//document.getElementsByClassName("home-tile")[0];
-
-var params = {
-    TableName:table,
-    Item:{
-        "Username": Username,
-        "Favorites": Fav,
-    }
-};
-
-console.log("Adding a new item...");
-docClient.put(params, function(err, data) {
-    if (err) {
-        console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-    } else {
-        console.log("Added item:", JSON.stringify(data, null, 2));
-    }
-});
-}
-</script>
+    <h class="tableheader">Regattas:</h>
+    <hr>
+    <canvas id="myChart" height="100"></canvas>
 
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap-4.1.2/popper.js"></script>
-<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
-<script src="plugins/greensock/TweenMax.min.js"></script>
-<script src="plugins/greensock/TimelineMax.min.js"></script>
-<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
-<script src="plugins/greensock/animation.gsap.min.js"></script>
-<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/progressbar/progressbar.min.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="plugins/video-js/video.min.js"></script>
-<script src="plugins/video-js/Youtube.min.js"></script>
-<script src="js/about.js"></script>
+
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0-rc.1/Chart.bundle.js"></script>
+    <script src="js/chartjs-plugin-annotation.min.js"></script>
+    <script src="https://unpkg.com/d3-regression@1.2.4/dist/d3-regression.min.js"></script>
+
+    <script>
+      //Useful function that uppercases the first letter of each word in a word-word-word string.
+      function dtu(str) {
+        output = "";
+        str.match(/([\w\d]+)/g).forEach((element) => {
+          output += element.charAt(0).toUpperCase() + element.slice(1) + " ";
+        });
+        return output;
+      }
+      $(document).ready(function() {
+        //We get the html parameters
+        params = {};
+        location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(s, k, v) {
+          params[k] = v
+        })
+        //Begin our ajax request
+        $.ajax({
+          type: "GET",
+          url: "https://teqr5x3h2h.execute-api.us-east-1.amazonaws.com/dev/sailor-request",
+          data: {
+            uuid: params['uuid']
+          },
+          //If succsessful we parse the data
+          success: function(data) {
+            //Parse out the elements from the json string
+            name = dtu(data['sailor-uuid']);
+            $("#name").text(name);
+            $("#nameheader").text("Stats | " + name);
+            $("#school").text(data['home']);
+            $("#grad").text(data['grad_year']);
+            $("#regattas").text(data['regatta_count']);
+            $("#finish").text(data['average_finish']);
+            $("#sailed").text(data['sail_percentage'] + "%");
+            //Make a array of regattas and an array of finishes to graph.
+            regattaLabels = [];
+            finish = [];
+            //For all the regattas
+            for (var regatta in data['regattas']) {
+              //We regex clean the label and add it to the array.
+              cleanLabel = regatta.match(/\w\d\d\/(.*)/);
+              if (cleanLabel == null) {
+                continue;
+              }
+              regattaLabels.push(dtu(cleanLabel[1]));
+              //We regex clean the finish, if it is n/a we make it null, otherwise we take the finish.
+              rawFinish = data['regattas'][regatta]['finish'];
+              if (rawFinish == "N/A") {
+                rawFinish = null;
+              } else {
+                rawFinish = parseInt(rawFinish.match(/(^\d{1,2})/g)[0]);
+              }
+              finish.push(rawFinish);
+            }
+            finish.reverse();
+            regattaLabels.reverse();
+            //Cleaning the data of null values for linear regression
+            //https://stackoverflow.com/questions/6195335/linear-regression-in-javascript/17793052
+            x = [];
+            y = [];
+            for (i = 0; i < finish.length; i++) {
+              if (finish[i] == null) {
+                continue;
+              }
+              x.push(i);
+              y.push(parseInt(finish[i]))
+            }
+            var lr = {};
+            var n = y.length;
+            var sum_x = 0;
+            var sum_y = 0;
+            var sum_xy = 0;
+            var sum_xx = 0;
+            var sum_yy = 0;
+            for (var i = 0; i < y.length; i++) {
+              sum_x += x[i];
+              sum_y += y[i];
+              sum_xy += (x[i] * y[i]);
+              sum_xx += (x[i] * x[i]);
+              sum_yy += (y[i] * y[i]);
+            }
+            //Linear regression results
+            lr['slope'] = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
+            lr['intercept'] = (sum_y - lr.slope * sum_x) / n;
+            lr['r2'] = Math.pow((n * sum_xy - sum_x * sum_y) / Math.sqrt((n * sum_xx - sum_x * sum_x) * (n * sum_yy - sum_y * sum_y)), 2);
+            //This calculates where the linear regression line should end when plotted over regatta data.
+            lr['end'] = (data['regatta_count'] * lr['slope'] + lr['intercept']);
+            //If their regression is getting better, we can pick one color, if it is getting worse we can pick another.
+            //Right now they are the same color because I couldn't choose.
+            if (lr['slope'] >= 0) {
+              lr['color'] = 'rgb(75, 119, 238)';
+            } else {
+              lr['color'] = 'rgb(75, 119, 238)';
+            }
+            //We create a chart
+            var ctx = $("#myChart");
+            var chart = new Chart(ctx, {
+              // The type of chart we want to create
+              type: 'line',
+              // The data for our dataset
+              data: {
+                labels: regattaLabels,
+                datasets: [{
+                  label: 'Regatta Finishes',
+                  lineTension: 0,
+                  backgroundColor: 'rgb(156, 83, 240)',
+                  data: finish,
+                }]
+              },
+              // Config
+              options: {
+                //Fills in hole
+                spanGaps: true,
+                bezierCurve: true,
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      beginAtZero: true,
+                      suggestedMax: 18,
+                      // bottom: 0,
+                      // top: 18
+                    },
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Regatta Name",
+                      fontStyle: "bold"
+                    }
+                  }],
+                  xAxes: [{
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Finish",
+                      fontStyle: "bold"
+                    }
+                  }],
+                },
+                annotation: {
+                  annotations: [{
+                      // drawTime: 'beforeDatasetsDraw',
+                      type: 'line',
+                      mode: 'horizontal',
+                      scaleID: 'y-axis-0',
+                      value: data['average_finish'],
+                      borderColor: 'rgb(0, 0, 0)',
+                      borderWidth: 4,
+                      label: {
+                        yAdjust: -15,
+                        backgroundColor: "rgb(255,255,255, 0.8",
+                        fontColor: "black",
+                        enabled: true,
+                        position: "left",
+                        content: ['Average Finish'],
+                      }
+                    },
+                    {
+                      type: 'line',
+                      mode: 'horizontal',
+                      scaleID: 'y-axis-0',
+                      value: lr['intercept'],
+                      endValue: lr['end'],
+                      borderColor: lr['color'],
+                      borderWidth: 4,
+                      label: {
+                        position: "left",
+                        backgroundColor: "rgb(255,255,255, 0.8",
+                        fontColor: lr['color'],
+                        yAdjust: 15,
+                        xAdjust: 15,
+                        enabled: true,
+                        content: 'Trendline',
+                      }
+                    }
+                  ]
+                }
+              }
+            });
+          },
+          error: function(data) {
+            console.log(data)
+          },
+        });
+      });
+    </script>
+    <script src="styles/bootstrap-4.1.2/popper.js"></script>
+    <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+    <script src="plugins/greensock/TweenMax.min.js"></script>
+    <script src="plugins/greensock/TimelineMax.min.js"></script>
+    <script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="plugins/greensock/animation.gsap.min.js"></script>
+    <script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="plugins/easing/easing.js"></script>
+    <script src="plugins/progressbar/progressbar.min.js"></script>
+    <script src="plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="plugins/video-js/video.min.js"></script>
+    <script src="plugins/video-js/Youtube.min.js"></script>
+    <script src="js/about.js"></script>
 </body>
+
 </html>
