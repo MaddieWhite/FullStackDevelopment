@@ -16,11 +16,9 @@
   <link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="styles/about.css">
   <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
-  <script language="javascript">
-    function star(icon) {
-      $(icon).toggleClass('fa-star-o fa-star');
-    }
-  </script>
+  
+ 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+	
 </head>
 
 <body>
@@ -81,7 +79,7 @@
         <div class="row">
           <div class="col">
             <div class="home_content">
-              <div class="home_title" id="name">Sailor Name</div>
+              <div class="home_title" id="name">Sailor Name<i class="fa fa-star-o" onClick="star(this)"></i></div>
             </div>
           </div>
         </div>
@@ -118,14 +116,60 @@
     <h class="tableheader">Regattas:</h>
     <hr>
     <canvas id="myChart" height="100"></canvas>
+	
+	
+		 <script>
+		 function updateFav(){
+		 //var AWS = require("aws-sdk");
 
+		 AWS.config.update({
+		   //credentials: new AWS.CognitoIdentityCredentials({
+		 	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
+		   accessKeyId: "AKIAII6KMQAP4H637LNA",
+		   secretAccessKey: "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",
+		   region: "us-east-1",
+		   endpoint: "dynamodb.us-east-1.amazonaws.com"
+		 });
+		 var table = "SailingScoresUserFavorites";
 
+		  var docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
 
+		  var Username = "jcgoyco@smcm.edu";
+		  var Fav = "Sailor 7";//document.getElementsByClassName("home-tile")[0];
+
+		  var params = {
+		      TableName:table,
+		      Item:{
+		          "Username": Username,
+		          "Favorites": Fav,
+		      }
+		  };
+
+		  console.log("Adding a new item...");
+		  docClient.put(params, function(err, data) {
+		      if (err) {
+		          console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+		      } else {
+		          console.log("Added item:", JSON.stringify(data, null, 2));
+		      }
+		  });
+		  }
+		 </script>
+	
+	
+	<script language="javascript">
+	 function star ( icon ) {
+	   updateFav();
+	   $(icon).toggleClass('fa-star-o fa-star');
+	 }
+	 </script>
+	 
 
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0-rc.1/Chart.bundle.js"></script>
     <script src="js/chartjs-plugin-annotation.min.js"></script>
     <script src="https://unpkg.com/d3-regression@1.2.4/dist/d3-regression.min.js"></script>
+
 
     <script>
       //Useful function that uppercases the first letter of each word in a word-word-word string.
