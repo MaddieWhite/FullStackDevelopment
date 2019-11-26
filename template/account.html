@@ -14,6 +14,7 @@
 <link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/about.css">
 <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
+ 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -112,15 +113,15 @@
 
         <div class="col-md-6">
           <div class="w-95 mt-2">
-            <table class="table table-bordered table-hover" id='saved'>
+            <table class="table table-bordered table-hover">
               <caption>Saved Sailors</caption>
               <thead class='thead-dark'>
                 <tr>
-                  <th scope='col'>Name</th>
+                  <th scope='col'>Names</th>
                  
                 </tr>
               </thead>
-              <tbody>
+              <tbody id='saved'><li><a href="Sailor.html"></a></li>
                 <!-- Rows will populate here -->
               </tbody>
             </table>
@@ -141,6 +142,50 @@
     <script src="plugins/progressbar/progressbar.min.js"></script>
     <script src="plugins/parallax-js-master/parallax.min.js"></script>
     <script src="js/services.js"></script>
+	
+<!--script>
+	
+ AWS.config.update({
+   //credentials: new AWS.CognitoIdentityCredentials({
+ 	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
+   accessKeyId: "AKIAII6KMQAP4H637LNA",
+   secretAccessKey: "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",
+   region: "us-east-1",
+   endpoint: "dynamodb.us-east-1.amazonaws.com"
+ });
+ var table = "SailingScoresUserFavorites";
+
+  var docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
+  var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+
+	var params = {
+	    TableName : table,
+		Key: {
+		    'Username': {S: result[2].getValue()}//{S: 'email'}
+		  },
+		  ProjectionExpression: 'Favorites'
+	};
+
+	ddb.getItem(params, function(err, data) {
+	  if (err) {
+	    console.log("Error", err);
+	  } else {
+	    console.log("Success", data.Item);
+	    document.getElementById("saved").innerHTML = data.Item.Favorites.value;
+  }
+	});
+  
+
+
+	
+	
+          
+</script-->
+	
+	<!-->
+		Make sailor name a link
+		Save multiple favorites in a list on dynamodb
+		<-->
 
 
  <script>
@@ -167,6 +212,38 @@
 				}
 				console.log(result);
 				document.getElementById("email_value").innerHTML = result[2].getValue();	
+				
+	
+			    AWS.config.update({
+			      //credentials: new AWS.CognitoIdentityCredentials({
+			    	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
+			      accessKeyId: "AKIAII6KMQAP4H637LNA",
+			      secretAccessKey: "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",
+			      region: "us-east-1",
+			      endpoint: "dynamodb.us-east-1.amazonaws.com"
+			    });
+			    var table = "SailingScoresUserFavorites";
+
+			     var docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
+			     var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+
+			   	var params = {
+			   	    TableName : table,
+			   		Key: {
+			   		    'Username': {S: result[2].getValue()}//{S: 'email'}
+			   		  },
+			   		  ProjectionExpression: 'Favorites'
+			   	};
+
+			   	ddb.getItem(params, function(err, data) {
+			   	  if (err) {
+			   	    console.log("Error", err);
+			   	  } else {
+			   	    console.log("Success", data.Item, JSON.stringify(data, null, 2));
+			   	    document.getElementById("saved").innerHTML = JSON.stringify(data.Item.Favorites.S, null, 2);
+			     }
+			   	});
+  
 			});			
 			
         });
