@@ -76,7 +76,7 @@ def roster_finder(uuid, season="f19"):
 
 #URL and APIKey for the matrix api
 matrixurl = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&'
-matrixapikey = "AIzaSyCNOjE-mzTCs-SD5I8KlEGmkTXw3AeyMy0"
+matrixapikey = "API KEY GOES HERE"
 
 #Takes in a regatta dictionary and returns a tuple with the distance and time traveled.
 def distanceCalculator(dict, home):
