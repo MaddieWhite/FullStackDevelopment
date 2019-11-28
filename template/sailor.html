@@ -37,9 +37,9 @@
             <div class="col-lg-10 offset-lg-2">
               <nav class="main_nav">
                 <ul class="d-flex flex-row align-items-center justify-content-start">
-                  <li ><a href="index.html">Home</a></li>
-                  <li ><a href="schools.html">Schools</a></li>
-                  <li ><a href="leaderboard.html">Leaderboard</a></li>
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="schools.html">Schools</a></li>
+                  <li><a href="leaderboard.html">Leaderboard</a></li>
                 </ul>
               </nav>
             </div>
@@ -112,6 +112,14 @@
           <td class="cellheader">Perentage Regattas Sailed</td>
           <td id="sailed"></td>
         </tr>
+        <tr>
+          <td class="cellheader">Time Traveled</td>
+          <td id="seconds"></td>
+        </tr>
+        <tr>
+          <td class="cellheader">Miles Traveled</td>
+          <td id="meters"></td>
+        </tr>
       </tbody>
     </table>
 
@@ -137,6 +145,17 @@
           output += element.charAt(0).toUpperCase() + element.slice(1) + " ";
         });
         return output;
+      }
+      //Useful function to convert seconds to hours/minutes.
+      //https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript
+      function secondsToHms(d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+
+        var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
+        return hDisplay + mDisplay
       }
 
       $(document).ready(function() {
@@ -164,6 +183,8 @@
             $("#regattas").text(data['regatta_count']);
             $("#finish").text(data['average_finish'].toFixed(1));
             $("#sailed").text(data['sail_percentage'].toFixed(1) + "%");
+            $("#seconds").text(secondsToHms(data['seconds_traveled']));
+            $("#meters").text((data['meters_traveled'] / 1609.344).toFixed(1) + " miles");
 
             //Make a array of regattas and an array of finishes to graph.
             regattaLabels = [];
@@ -245,7 +266,7 @@
                 datasets: [{
                   label: 'Regatta Finishes',
                   lineTension: 0,
-                  backgroundColor: 'rgb(156, 83, 240)',
+                  backgroundColor: 'rgb(113, 82, 243)',
                   data: finish,
                 }]
               },

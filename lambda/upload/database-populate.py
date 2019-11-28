@@ -1,7 +1,5 @@
 import pymysql, requests, re, json, sys, datetime, rds_config, boto3
 import scrapingtools as st
-## TODO: The plan for this class is to return a json dictionary as its body that we can use ajax to populate HTML.
-#Looks like I can make SQL do it: https://mysqlserverteam.com/mysql-8-0-from-sql-tables-to-json-documents-and-back-again/
 
 lambda_client = boto3.client('lambda')
 
