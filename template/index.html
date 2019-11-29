@@ -127,19 +127,24 @@
 					$(document).ready(function() {
 						$("#search-button").click(function(event) {
 							event.preventDefault();
+							input = $("#search-bar").val();
+							if(input.match(/\/sailors\/([^\/]+)/) != null){
+								input = input.match(/\/sailors\/([^\/]+)/)[1];
+							}
+							console.log(input.match(/\/sailors\/([^\/]+)/));
+							console.log(input);
 							$.ajax({
 								type: "GET",
 								//dataType: "text",
 								url: "https://teqr5x3h2h.execute-api.us-east-1.amazonaws.com/dev/sailor-retrieve",
 								data: {
-									uuid: $("#search-bar").val()
+									uuid: input
 								},
 								success: function(data) {
 									console.log(data)
 									window.location.href = "sailor.html" + data['url'];
 								},
 								error: function(data) {
-									console.log("Attempting to show modal")
 									var modal = $("#errorModal");
 									modal.modal('show');
 								},
@@ -171,9 +176,8 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<p class="help-text">&emsp;&emsp;To find a sailors unique id go to <b><a href="https://scores.collegesailing.org/">scores.collegesailing.org</a></b> and search for the sailors name. Their unique ID is the last item in the address bar.
-					Enter
-					just the sailor-uuid without the slashes.</p>
+				<p class="help-text">&emsp;&emsp;To find a sailor id go to <b><a href="https://scores.collegesailing.org/">scores.collegesailing.org</a></b> and search for the sailors name. You can either copy the entire url to their page, or copy their unique ID which is the last item in the address bar without any backslashes.
+				</p>
 				<div><img src="images/uuidexample.jpeg" class="help-img"></div>
 			</div>
 		</div>
