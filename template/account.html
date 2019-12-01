@@ -72,7 +72,7 @@
 				<!-- Header Links -->
 				<div class="header_links">
 					<ul class="d-flex flex-row align-items-center justify-content-start">
-						<li><a href="index.html">Sign Out</a></li>
+						<li><a href="index.html"  onClick="signOut()">Sign Out</a></li>
 					</ul>
 				</div>
 
@@ -121,8 +121,9 @@
                  
                 </tr>
               </thead>
-              <tbody id='saved'><li><a href="Sailor.html"></a></li>
+              <tbody id = "saved">
                 <!-- Rows will populate here -->
+				
               </tbody>
             </table>
           </div>
@@ -142,50 +143,6 @@
     <script src="plugins/progressbar/progressbar.min.js"></script>
     <script src="plugins/parallax-js-master/parallax.min.js"></script>
     <script src="js/services.js"></script>
-	
-<!--script>
-	
- AWS.config.update({
-   //credentials: new AWS.CognitoIdentityCredentials({
- 	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
-   accessKeyId: "AKIAII6KMQAP4H637LNA",
-   secretAccessKey: "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",
-   region: "us-east-1",
-   endpoint: "dynamodb.us-east-1.amazonaws.com"
- });
- var table = "SailingScoresUserFavorites";
-
-  var docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
-  var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
-
-	var params = {
-	    TableName : table,
-		Key: {
-		    'Username': {S: result[2].getValue()}//{S: 'email'}
-		  },
-		  ProjectionExpression: 'Favorites'
-	};
-
-	ddb.getItem(params, function(err, data) {
-	  if (err) {
-	    console.log("Error", err);
-	  } else {
-	    console.log("Success", data.Item);
-	    document.getElementById("saved").innerHTML = data.Item.Favorites.value;
-  }
-	});
-  
-
-
-	
-	
-          
-</script-->
-	
-	<!-->
-		Make sailor name a link
-		Save multiple favorites in a list on dynamodb
-		<-->
 
 
  <script>
@@ -217,8 +174,8 @@
 			    AWS.config.update({
 			      //credentials: new AWS.CognitoIdentityCredentials({
 			    	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
-			      accessKeyId: "AKIAII6KMQAP4H637LNA",
-			      secretAccessKey: "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",
+					  accessKeyId: "",
+					  secretAccessKey: "",
 			      region: "us-east-1",
 			      endpoint: "dynamodb.us-east-1.amazonaws.com"
 			    });
@@ -232,16 +189,26 @@
 			   		Key: {
 			   		    'Username': {S: result[2].getValue()}//{S: 'email'}
 			   		  },
-			   		  ProjectionExpression: 'Favorites'
+			   		  ProjectionExpression: 'Fav'
 			   	};
-
+				//var tableDescription = dynamoDB.getTable(table).describe().getItemCount();
+				var i;
+				
 			   	ddb.getItem(params, function(err, data) {
 			   	  if (err) {
 			   	    console.log("Error", err);
 			   	  } else {
-			   	    console.log("Success", data.Item, JSON.stringify(data, null, 2));
-			   	    document.getElementById("saved").innerHTML = JSON.stringify(data.Item.Favorites.S, null, 2);
+			   	    console.log("Success", data.Item, JSON.stringify(data.Item[0], null, 2));
+			   	   // document.getElementById("saved").innerHTML = data.Item.Fav.L[0].S;
+				   var h = document.getElementById("saved");
+				   for (i=0; i< data.Item.Fav.L.length;i++){
+				   var str = data.Item.Fav.L[i].S;
+				   var res = str.split(" ");
+				   
+				   var result = str.link("file:///Users/juliagoyco/Documents/GitHub/FullStackDevelopment1/template/sailor.html?uuid=" + res[0]+"-"+res[1]);
+				   h.insertAdjacentHTML("afterend","<br>"+result+"</br>");
 			     }
+			 }
 			   	});
   
 			});			
