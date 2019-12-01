@@ -1,9 +1,6 @@
-## TODO: Something simular to the previous lambda function that returns a dictionary baesd on
 import pymysql, requests, re, json, sys, datetime, rds_config
 from bs4 import BeautifulSoup
 import scrapingtools as st
-
-## TODO: The plan for this class is to return either a forwarding url to the user or an error message.
 
 #Attempt to connect to database.
 try:
@@ -26,17 +23,14 @@ def sailor_parse(uuid):
         response = cur.fetchone()
         #Add if the sailor doesn't exist
         if response is None:
-            print("adding")
             single_database_add(uuid)
             return lambdareturn(json.dumps(dict(url = f"?uuid={uuid}")))
         #Then check how old their last update was, if it is older than 7 days, we run an update function, otherwise we do nothing.
         else:
             currentDate = datetime.datetime.now()
             if (response[0] + datetime.timedelta(days=7)) >= currentDate:
-                print("updated within 7 days")
                 return lambdareturn(json.dumps(dict(url = f"?uuid={uuid}")))
         single_database_update(uuid)
-        print("updating")
         return lambdareturn(json.dumps(dict(url = f"?uuid={uuid}")))
 
 #Adds a sailor to the database
@@ -57,8 +51,10 @@ def single_database_add(uuid):
         #Insert the scraping result into the table first sailors
         scraperesult = st.sailor_scrape(uuid)
         indivStat = scraperesult.copy()
+        #We remove the regatta stat for this insertion as we do that differently.
         del indivStat['regattas']
-        indivcommand = """INSERT INTO sailors(sailor_uuid, regatta_count, home, grad_year, sail_percent, average_finish) VALUES(%s, %s, %s, %s, %s, %s);"""
+        #Then do the insert of all the values.
+        indivcommand = """INSERT INTO sailors(sailor_uuid, regatta_count, home, grad_year, sail_percent, average_finish, meters_traveled, second_traveled) VALUES(%s, %s, %s, %s, %s, %s, %s, %s);"""
         cur.execute(indivcommand, tuple(indivStat[e] for e in indivStat))
         conn.commit()
 
@@ -81,7 +77,7 @@ def single_database_update(uuid):
         sailorInfo = scraperesult.copy()
         del sailorInfo['regattas']
         del sailorInfo['sailor-uuid']
-        indivcommand = """UPDATE sailors SET regatta_count=%s, home=%s, grad_year=%s, sail_percent=%s, average_finish=%s WHERE sailor_uuid = %s"""
+        indivcommand = """UPDATE sailors SET regatta_count=%s, home=%s, grad_year=%s, sail_percent=%s, average_finish=%s, meters_traveled=%s, second_traveled=%s WHERE sailor_uuid = %s"""
         cur.execute(indivcommand, tuple(sailorInfo[e] for e in sailorInfo)+(scraperesult['sailor-uuid'],))
         conn.commit()
 

@@ -1,6 +1,4 @@
 import pymysql, requests, re, json, sys, datetime, rds_config
-## TODO: The plan for this class is to return a json dictionary as its body that we can use ajax to populate HTML.
-#Looks like I can make SQL do it: https://mysqlserverteam.com/mysql-8-0-from-sql-tables-to-json-documents-and-back-again/
 
 #Attempt to connect to database.
 connection = True
@@ -19,7 +17,7 @@ def sailor_request(uuid):
         return lambdareturn("Unable to connect to datebase", 500)
     with conn.cursor() as cur:
         #Retrive the sailors data already as json.
-        cur.execute("""SELECT JSON_OBJECT("sailor-uuid", sailor_uuid, "average_finish", average_finish, "grad_year", CONVERT(grad_year, CHAR), "regatta_count", regatta_count, "sail_percentage", sail_percent, "home", home) FROM sailors WHERE sailor_uuid=%s""", uuid)
+        cur.execute("""SELECT JSON_OBJECT("sailor-uuid", sailor_uuid, "average_finish", average_finish, "grad_year", CONVERT(grad_year, CHAR), "regatta_count", regatta_count, "sail_percentage", sail_percent, "home", home, "seconds_traveled", second_traveled, "meters_traveled", meters_traveled) FROM sailors WHERE sailor_uuid=%s""", uuid)
         conn.commit()
         try:
             sailorDict = json.loads(cur.fetchone()[0])

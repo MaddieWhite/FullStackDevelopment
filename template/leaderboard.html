@@ -130,6 +130,7 @@
                 <tr>
                   <th scope='col'>Rank</th>
                   <th scope='col'>Name</th>
+                  <th scope='col'>School</th>
                   <th scope='col'>Average Finish</th>
                 </tr>
               </thead>
@@ -148,6 +149,7 @@
                 <tr>
                   <th scope='col'>Rank</th>
                   <th scope='col'>Name</th>
+                  <th scope='col'>School</th>
                   <th scope='col'>Regattas Sailed</th>
                 </tr>
               </thead>
@@ -166,6 +168,7 @@
                 <tr>
                   <th scope='col'>Rank</th>
                   <th scope='col'>Name</th>
+                  <th scope='col'>School</th>
                   <th scope='col'>Sail Percentage</th>
                 </tr>
               </thead>
@@ -179,12 +182,13 @@
 
         <div class="col-md-6">
           <div class="w-95 mt-2">
-            <table class="table table-bordered table-hover" id='averagef'>
+            <table class="table table-bordered table-hover" id='travelt'>
               <caption>Travel Time</caption>
               <thead class='thead-dark'>
                 <tr>
                   <th scope='col'>Rank</th>
                   <th scope='col'>Name</th>
+                  <th scope='col'>School</th>
                   <th scope='col'>Travel Time</th>
                 </tr>
               </thead>
@@ -194,7 +198,7 @@
             </table>
           </div>
         </div>
-
+              <small class="mb-4 pl-2" >To be included in a leaderboard, you must have gone to ten or more regattas.</small>
       </div>
     </div>
 
@@ -208,7 +212,9 @@
         });
         return output;
       }
-      function populateTable(column, count, op, columnNum, tableID) {
+
+      function populateTable(column, count, op, columnNum, tableID, format) {
+
         $.ajax({
           type: "GET",
           url: "https://teqr5x3h2h.execute-api.us-east-1.amazonaws.com/dev/leaderboard",
@@ -220,10 +226,12 @@
           //If succsessful we parse the data
           success: function(data) {
             for (i = 0; i < data.length; i++) {
+              id = data[i][0];
               rank = "#" + (i + 1);
               name = dtu(data[i][0]);
-              stat = data[i][columnNum];
-              row = '<tr><th scope="row">' + rank + '</th><td>' + name + '</td><td>' + stat + '</td></tr>';
+              school = data[i][1];
+              stat = format(data[i][columnNum]);
+              row = '<tr><th scope="row">' + rank + '</th><td><a href="sailor.html?uuid=' + id + '">' + name + '</a></td><td>' + school + '</td><td>' + stat + '</td></tr>';
               $("#" + tableID).append(row);
             }
           },
@@ -232,11 +240,39 @@
           },
         });
       }
+
+
+      //Callback formatting functions
+      //Percent
+      function p(n){
+        return n.toFixed(1) + "%"
+      }
+      //1 decimal place
+      function a(n){
+        return n.toFixed(1)
+      }
+      //No formatting
+      function n(n){
+        return n
+      }
+      //seconds to hours/minutes
+      function s(d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+
+        var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
+        return hDisplay + mDisplay
+      }
+
+
       $(document).ready(function() {
         //Begin our ajax request
-        populateTable("sail_percent", 10, "asc", 5, "sailp")
-        populateTable("average_finish ", 10, "asc", 2, "averagef")
-        populateTable("regatta_count", 10, "desc", 4, "regattas")
+        populateTable("sail_percent", 15, "asc", 5, "sailp", p);
+        populateTable("average_finish ", 15, "asc", 2, "averagef", a);
+        populateTable("regatta_count", 15, "desc", 4, "regattas", n);
+        populateTable("second_traveled", 15, "desc", 8, "travelt", s);
       });
     </script>
     <script src="styles/bootstrap-4.1.2/popper.js"></script>

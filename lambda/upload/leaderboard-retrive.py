@@ -1,6 +1,4 @@
 import pymysql, requests, re, json, sys, datetime, rds_config
-## TODO: The plan for this class is to return a json dictionary as its body that we can use ajax to populate HTML.
-#Looks like I can make SQL do it: https://mysqlserverteam.com/mysql-8-0-from-sql-tables-to-json-documents-and-back-again/
 
 #Attempt to connect to database.
 connection = True
