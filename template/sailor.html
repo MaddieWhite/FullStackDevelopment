@@ -18,6 +18,10 @@
   <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
   
  	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+    <!--Cognito JavaScript-->
+   	<script src="js/amazon-cognito-identity.min.js"></script>  
+   	<script src="js/config.js"></script>
+	
 	
 </head>
 
@@ -79,7 +83,8 @@
         <div class="row">
           <div class="col">
             <div class="home_content">
-              <div class="home_title" id="name">Sailor Name<i class="fa fa-star-o" onClick="star(this)"></i></div>
+              <div class="home_title" id="name"> Sailor Name </div>
+			 <i class="fa fa-star-o" onClick="star(this)"></i>
             </div>
           </div>
         </div>
@@ -116,44 +121,125 @@
     <h class="tableheader">Regattas:</h>
     <hr>
     <canvas id="myChart" height="100"></canvas>
+
+			 
+		  <script>
+			  
+			function s(){  
+		 	var data = { 
+		 	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
+		 	        ClientId : '352g7qe1vat8ok0631n096c8gt',
+		     };
+		     var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+		     var cognitoUser = userPool.getCurrentUser();
 	
-	
-		 <script>
+		 	window.onload = function(){
+		     if (cognitoUser != null) {
+		         cognitoUser.getSession(function(err, session) {
+		             if (err) {
+		                 alert(err);
+		                 return;
+		             }
+		             console.log('session validity: ' + session.isValid());
+		 			//Set the profile info
+		 			cognitoUser.getUserAttributes(function(err, result) {
+		 				if (err) {
+		 					console.log(err);
+		 					return;
+		 				}
+		 				console.log(result, JSON.stringify(result, null, 2));
+		 				//document.getElementById("email_value").innerHTML = result[2].getValue();	
+						return JSON.stringify(result, null, 2);//result[2].getValue()
+		 			});			
+			
+		         });
+		     }
+		 }
+	 }
+		 	function signOut(){
+		 	    if (cognitoUser != null) {
+		           cognitoUser.signOut();	  
+		         }
+		 	}
+
+			 
+			 
+			 
 		 function updateFav(){
-		 //var AWS = require("aws-sdk");
+		 	var data = { 
+		 	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
+		 	        ClientId : '352g7qe1vat8ok0631n096c8gt',
+		     };
+		     var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+		     var cognitoUser = userPool.getCurrentUser();
+	
+			 
+		     if (cognitoUser != null) {
+		         cognitoUser.getSession(function(err, session) {
+		             if (err) {
+		                 alert(err);
+		                 return;
+		             }
+		             console.log('session validity: ' + session.isValid());
+		 			//Set the profile info
+		 			cognitoUser.getUserAttributes(function(err, result) {
+		 				if (err) {
+		 					console.log(err);
+		 					return;
+		 				}
+		 				console.log(result);
+		 				//document.getElementById("email_value").innerHTML = result[2].getValue();	
+							 
+			 
+ 		    AWS.config.update({
+ 		   //credentials: new AWS.CognitoIdentityCredentials({
+ 		 	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
+ 			accessKeyId: "",
+ 			secretAccessKey: "",
+ 		   	region: "us-east-1",
+ 		   	endpoint: "dynamodb.us-east-1.amazonaws.com"
+ 			 });
+			 
+			 
+ 	
+			var user = result[2].getValue();
+			//document.getElementById("email_value").innerHTML = result[2].getValue();	
+			//return JSON.stringify(result, null, 2);//result[2].getValue()
 
-		 AWS.config.update({
-		   //credentials: new AWS.CognitoIdentityCredentials({
-		 	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
-		   accessKeyId: "AKIAII6KMQAP4H637LNA",
-		   secretAccessKey: "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",
-		   region: "us-east-1",
-		   endpoint: "dynamodb.us-east-1.amazonaws.com"
-		 });
-		 var table = "SailingScoresUserFavorites";
+ 			 var table = "SailingScoresUserFavorites";
 
-		  var docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
+ 			  var docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
 
-		  var Username = "jcgoyco@smcm.edu";
-		  var Fav = "Sailor 7";//document.getElementsByClassName("home-tile")[0];
+ 			  //Get name
+ 			  var Fav = document.getElementById("name").textContent;
 
-		  var params = {
-		      TableName:table,
-		      Item:{
-		          "Username": Username,
-		          "Favorites": Fav,
-		      }
-		  };
+			  var params = {
+			      TableName:table,
+		   		   Key: {'Username':user},//{S: 'email'}
+				   UpdateExpression: 'set #Fav = list_append(if_not_exists(Fav, :empty_list), :Fav)',
+				      ExpressionAttributeNames: {
+				        '#Fav': 'Fav'
+				      },
+				      ExpressionAttributeValues: {
+				        ':Fav': [Fav],
+				        ':empty_list': []
+				      }
+			  };
 
-		  console.log("Adding a new item...");
-		  docClient.put(params, function(err, data) {
-		      if (err) {
-		          console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-		      } else {
-		          console.log("Added item:", JSON.stringify(data, null, 2));
-		      }
-		  });
-		  }
+			  console.log("Adding a new item...");
+			  docClient.update(params, function(err, data) {
+			      if (err) {
+			          console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+			      } else {
+			          console.log("Added item:", JSON.stringify(data, null, 2));
+			      }
+			  });
+		});			
+		
+      });
+  }
+			  
+			  }
 		 </script>
 	
 	
