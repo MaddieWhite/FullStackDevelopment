@@ -27,7 +27,6 @@
       width: auto;
       height: auto;
     }
-
     .row-lg-10 {
       position: 600px;
       display: inline-block;
@@ -35,14 +34,12 @@
       height: 40px;
       border-bottom: 1px solid #AFAFAF;
     }
-
     .name {
       position: relative;
       display: inline-block;
       width: 75%;
       line-height: 45px;
     }
-
     .score {
       position: relative;
       display: inline-block;
@@ -217,6 +214,7 @@
       }
 
       function populateTable(column, count, op, columnNum, tableID, format) {
+
         $.ajax({
           type: "GET",
           url: "https://teqr5x3h2h.execute-api.us-east-1.amazonaws.com/dev/leaderboard",
@@ -242,6 +240,7 @@
           },
         });
       }
+
 
       //Callback formatting functions
       //Percent
@@ -274,7 +273,6 @@
         populateTable("average_finish ", 15, "asc", 2, "averagef", a);
         populateTable("regatta_count", 15, "desc", 4, "regattas", n);
         populateTable("second_traveled", 15, "desc", 8, "travelt", s);
-
       });
     </script>
     <script src="styles/bootstrap-4.1.2/popper.js"></script>

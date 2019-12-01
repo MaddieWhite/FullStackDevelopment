@@ -14,6 +14,7 @@
 <link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/about.css">
 <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
+ 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -71,7 +72,7 @@
 				<!-- Header Links -->
 				<div class="header_links">
 					<ul class="d-flex flex-row align-items-center justify-content-start">
-						<li><a href="index.html">Sign Out</a></li>
+						<li><a href="index.html"  onClick="signOut()">Sign Out</a></li>
 					</ul>
 				</div>
 
@@ -110,56 +111,38 @@
 		</div>
 	</div>
 
-<nav class="navbar navbar-inverse visible-xs">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">My Account</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <!--li class="active"><a href="#">Dashboard</a></li-->
-        <!--li><a href="#">Schools</a></li>
-        <li><a href="#">Sailors</a></li-->
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    <div class="col-sm-9 offset-1">
-      <div>
-        
-      </div>
-      </div>
-
-        <div class="row">
-        <div class="col-sm-4 offset-1">
-          <div class="well">
-			<h4>Leaderboards</h4>
-            <p><li><a href="Leaderboard.html">Average Finish</a></li></p>
+        <div class="col-md-6">
+          <div class="w-95 mt-2">
+            <table class="table table-bordered table-hover">
+              <caption>Saved Sailors</caption>
+              <thead class='thead-dark'>
+                <tr>
+                  <th scope='col'>Names</th>
+                 
+                </tr>
+              </thead>
+              <tbody id = "saved">
+                <!-- Rows will populate here -->
+				
+              </tbody>
+            </table>
           </div>
         </div>
-
-        <div class="col-sm-4 ">
-          <div class="well">
-			<h4>Sailors</h4>
-			<p><li><a href="sailor.html">Text</a></li></p>
-          </div>
-        </div>
-	</div>
-        
-
       </div>
 
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    </script>
+    <script src="styles/bootstrap-4.1.2/popper.js"></script>
+    <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+    <script src="plugins/greensock/TweenMax.min.js"></script>
+    <script src="plugins/greensock/TimelineMax.min.js"></script>
+    <script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="plugins/greensock/animation.gsap.min.js"></script>
+    <script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="plugins/easing/easing.js"></script>
+    <script src="plugins/progressbar/progressbar.min.js"></script>
+    <script src="plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="js/services.js"></script>
 
 
  <script>
@@ -186,6 +169,48 @@
 				}
 				console.log(result);
 				document.getElementById("email_value").innerHTML = result[2].getValue();	
+				
+	
+			    AWS.config.update({
+			      //credentials: new AWS.CognitoIdentityCredentials({
+			    	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
+					  accessKeyId: "",
+					  secretAccessKey: "",
+			      region: "us-east-1",
+			      endpoint: "dynamodb.us-east-1.amazonaws.com"
+			    });
+			    var table = "SailingScoresUserFavorites";
+
+			     var docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
+			     var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+
+			   	var params = {
+			   	    TableName : table,
+			   		Key: {
+			   		    'Username': {S: result[2].getValue()}//{S: 'email'}
+			   		  },
+			   		  ProjectionExpression: 'Fav'
+			   	};
+				//var tableDescription = dynamoDB.getTable(table).describe().getItemCount();
+				var i;
+				
+			   	ddb.getItem(params, function(err, data) {
+			   	  if (err) {
+			   	    console.log("Error", err);
+			   	  } else {
+			   	    console.log("Success", data.Item, JSON.stringify(data.Item[0], null, 2));
+			   	   // document.getElementById("saved").innerHTML = data.Item.Fav.L[0].S;
+				   var h = document.getElementById("saved");
+				   for (i=0; i< data.Item.Fav.L.length;i++){
+				   var str = data.Item.Fav.L[i].S;
+				   var res = str.split(" ");
+				   
+				   var result = str.link("file:///Users/juliagoyco/Documents/GitHub/FullStackDevelopment1/template/sailor.html?uuid=" + res[0]+"-"+res[1]);
+				   h.insertAdjacentHTML("afterend","<br>"+result+"</br>");
+			     }
+			 }
+			   	});
+  
 			});			
 			
         });

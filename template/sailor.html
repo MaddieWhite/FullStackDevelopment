@@ -16,11 +16,13 @@
   <link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="styles/about.css">
   <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
-  <script language="javascript">
-    function star(icon) {
-      $(icon).toggleClass('fa-star-o fa-star');
-    }
-  </script>
+  
+ 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+    <!--Cognito JavaScript-->
+   	<script src="js/amazon-cognito-identity.min.js"></script>  
+   	<script src="js/config.js"></script>
+	
+	
 </head>
 
 <body>
@@ -81,7 +83,8 @@
         <div class="row">
           <div class="col">
             <div class="home_content">
-              <div class="home_title" id="name">Sailor Name</div>
+              <div class="home_title" id="name"> Sailor Name </div>
+			 <i class="fa fa-star-o" onClick="star(this)"></i>
             </div>
           </div>
         </div>
@@ -128,14 +131,141 @@
     <hr>
     <canvas id="myChart" height="100"></canvas>
 
+			 
+		  <script>
+			  
+			function s(){  
+		 	var data = { 
+		 	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
+		 	        ClientId : '352g7qe1vat8ok0631n096c8gt',
+		     };
+		     var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+		     var cognitoUser = userPool.getCurrentUser();
+	
+		 	window.onload = function(){
+		     if (cognitoUser != null) {
+		         cognitoUser.getSession(function(err, session) {
+		             if (err) {
+		                 alert(err);
+		                 return;
+		             }
+		             console.log('session validity: ' + session.isValid());
+		 			//Set the profile info
+		 			cognitoUser.getUserAttributes(function(err, result) {
+		 				if (err) {
+		 					console.log(err);
+		 					return;
+		 				}
+		 				console.log(result, JSON.stringify(result, null, 2));
+		 				//document.getElementById("email_value").innerHTML = result[2].getValue();	
+						return JSON.stringify(result, null, 2);//result[2].getValue()
+		 			});			
+			
+		         });
+		     }
+		 }
+	 }
+		 	function signOut(){
+		 	    if (cognitoUser != null) {
+		           cognitoUser.signOut();	  
+		         }
+		 	}
 
+			 
+			 
+			 
+		 function updateFav(){
+		 	var data = { 
+		 	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
+		 	        ClientId : '352g7qe1vat8ok0631n096c8gt',
+		     };
+		     var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+		     var cognitoUser = userPool.getCurrentUser();
+	
+			 
+		     if (cognitoUser != null) {
+		         cognitoUser.getSession(function(err, session) {
+		             if (err) {
+		                 alert(err);
+		                 return;
+		             }
+		             console.log('session validity: ' + session.isValid());
+		 			//Set the profile info
+		 			cognitoUser.getUserAttributes(function(err, result) {
+		 				if (err) {
+		 					console.log(err);
+		 					return;
+		 				}
+		 				console.log(result);
+		 				//document.getElementById("email_value").innerHTML = result[2].getValue();	
+							 
+			 
+ 		    AWS.config.update({
+ 		   //credentials: new AWS.CognitoIdentityCredentials({
+ 		 	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
+ 			accessKeyId: "",
+ 			secretAccessKey: "",
+ 		   	region: "us-east-1",
+ 		   	endpoint: "dynamodb.us-east-1.amazonaws.com"
+ 			 });
+			 
+			 
+ 	
+			var user = result[2].getValue();
+			//document.getElementById("email_value").innerHTML = result[2].getValue();	
+			//return JSON.stringify(result, null, 2);//result[2].getValue()
 
+ 			 var table = "SailingScoresUserFavorites";
+
+ 			  var docClient = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
+
+ 			  //Get name
+ 			  var Fav = document.getElementById("name").textContent;
+
+			  var params = {
+			      TableName:table,
+		   		   Key: {'Username':user},//{S: 'email'}
+				   UpdateExpression: 'set #Fav = list_append(if_not_exists(Fav, :empty_list), :Fav)',
+				      ExpressionAttributeNames: {
+				        '#Fav': 'Fav'
+				      },
+				      ExpressionAttributeValues: {
+				        ':Fav': [Fav],
+				        ':empty_list': []
+				      }
+			  };
+
+			  console.log("Adding a new item...");
+			  docClient.update(params, function(err, data) {
+			      if (err) {
+			          console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+			      } else {
+			          console.log("Added item:", JSON.stringify(data, null, 2));
+			      }
+			  });
+		});			
+		
+      });
+  }
+			  
+			  }
+		 </script>
+	
+	
+	<script language="javascript">
+	 function star ( icon ) {
+	   updateFav();
+	   $(icon).toggleClass('fa-star-o fa-star');
+	 }
+	 </script>
+	 
 
 
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0-rc.1/Chart.bundle.js"></script>
     <script src="js/chartjs-plugin-annotation.min.js"></script>
     <script src="https://unpkg.com/d3-regression@1.2.4/dist/d3-regression.min.js"></script>
+
 
     <script>
       //Useful function that uppercases the first letter of each word in a word-word-word string.
@@ -146,6 +276,7 @@
         });
         return output;
       }
+
       //Useful function to convert seconds to hours/minutes.
       //https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript
       function secondsToHms(d) {
@@ -164,7 +295,6 @@
         location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(s, k, v) {
           params[k] = v
         })
-
         //Begin our ajax request
         $.ajax({
           type: "GET",
@@ -189,7 +319,6 @@
             //Make a array of regattas and an array of finishes to graph.
             regattaLabels = [];
             finish = [];
-
             //For all the regattas
             for (var regatta in data['regattas']) {
               //We regex clean the label and add it to the array.
@@ -198,7 +327,6 @@
                 continue;
               }
               regattaLabels.push(dtu(cleanLabel[1]));
-
               //We regex clean the finish, if it is n/a we make it null, otherwise we take the finish.
               rawFinish = data['regattas'][regatta]['finish'];
               if (rawFinish == "N/A") {
@@ -210,7 +338,6 @@
             }
             finish.reverse();
             regattaLabels.reverse();
-
             //Cleaning the data of null values for linear regression
             //https://stackoverflow.com/questions/6195335/linear-regression-in-javascript/17793052
             x = [];
@@ -222,7 +349,6 @@
               x.push(i);
               y.push(parseInt(finish[i]))
             }
-
             var lr = {};
             var n = y.length;
             var sum_x = 0;
@@ -230,9 +356,7 @@
             var sum_xy = 0;
             var sum_xx = 0;
             var sum_yy = 0;
-
             for (var i = 0; i < y.length; i++) {
-
               sum_x += x[i];
               sum_y += y[i];
               sum_xy += (x[i] * y[i]);
@@ -252,14 +376,11 @@
             } else {
               lr['color'] = 'green';
             }
-
             //We create a chart
             var ctx = $("#myChart");
             var chart = new Chart(ctx, {
-
               // The type of chart we want to create
               type: 'line',
-
               // The data for our dataset
               data: {
                 labels: regattaLabels,
@@ -270,7 +391,6 @@
                   data: finish,
                 }]
               },
-
               // Config
               options: {
                 //Fills in hole
@@ -338,7 +458,6 @@
                 }
               }
             });
-
           },
           error: function(data) {
             console.log(data)
