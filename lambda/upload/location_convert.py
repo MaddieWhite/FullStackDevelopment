@@ -50,6 +50,19 @@ locations = {
 'Boston College/MIT':'ChIJiWvSN6hw44kR0opwGkt012Y',
 'San Diego State':'ChIJc_Ttn4ZW2YARXlBazDX52z8',
 'Cal Poly':'ChIJWcxAKZ3h7IARUasiGfna2_M',
+'Northeastern': 'ChIJiWvSN6hw44kR0opwGkt012Y',
+'Maine Maritime': 'ChIJJY7ojgNjrkwR2tC_H2MK2XQ',
+'Boston College':'ChIJS6PHKwJ744kRIQgS5xDXxK4',
+'Harvard': 'ChIJiWvSN6hw44kR0opwGkt012Y',
+'Mass Maritime': 'ChIJf3HsKtDJ5IkRu810Fwz3quc',
+'Vermont': 'ChIJu5kk9O56ykwRcx50L56t7Lw',
+'Ocean County': 'ChIJtQnLaSicwYkRlWLBxVKtFck',
+'Monmouth':'ChIJ0-pZHsk6wokRwFW7eZsWQ6o',
+'Columbia':'ChIJbyrnBIWNwokRPIX2zYz80nQ',
+'Hobart & William':'ChIJDarTARzF0IkR8CpymncFIU0',
+'Syracuse':'ChIJS1HyIKKH2YkR_KEwHF9DnB0',
+'Salve Regina':'ChIJj5knzHil5YkRH94QG5As85I',
+
 
 }
 
