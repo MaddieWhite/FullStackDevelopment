@@ -9,24 +9,21 @@ except pymysql.MySQLError as e:
 
 def lambda_handler(event, context):
     parameters = event['queryStringParameters']
-    return sailor_request(parameters['column'], parameters['count'], parameters['op'])
+    return sailor_request(parameters['table'], parameters['column'])
 
-def sailor_request(column, count, op):
+def column_request(table, column):
         #If we can't connect to the database we just return a 500.
     if not connection:
         return lambdareturn("Unable to connect to datebase", 500)
     with conn.cursor() as cur:
-        if op.lower() == "desc":
-            command  = f"""SELECT * FROM sailors ORDER BY {column} DESC LIMIT {count}"""
-            cur.execute(command)
-            conn.commit()
-            leaderboard = cur.fetchall()
-        else:
-            command = f"""SELECT * FROM sailors ORDER BY -{column} DESC LIMIT {count}"""
-            cur.execute(command)
-            conn.commit()
-            leaderboard = cur.fetchall()
-        return lambdareturn(leaderboard)
+        #Retrive the sailors data already as json.
+        cur.execute(f"""SELECT JSON_ARRAYAGG({column}) FROM {table}""")
+        conn.commit()
+        try:
+            response = json.loads(cur.fetchone()[0])
+        except:
+            return lambdareturn("Column or table not found", 400)
+        return lambdareturn(response)
 
 #lambda return is how we make sure all our returns from lambda are formatted correctly
 def lambdareturn(body, status=200):
@@ -34,5 +31,5 @@ def lambdareturn(body, status=200):
     "headers":{"Access-Control-Allow-Origin":"*",},
     "isBase64Encoded": False,
     "statusCode": status,
-    "body": json.dumps(body, indent=4, sort_keys=True, default=str),
+    "body": json.dumps(body)
     }

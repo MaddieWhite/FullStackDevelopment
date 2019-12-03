@@ -1,5 +1,6 @@
 import requests, json, datetime, sys, re
 from bs4 import BeautifulSoup
+import location_convert as loc
 
 #Request method that has error handling for when it won't connect.
 def request(url):
@@ -72,6 +73,50 @@ def roster_finder(uuid, season="f19"):
             roster.append(uuid)
         return(roster)
 
+
+#URL and APIKey for the matrix api
+matrixurl = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&'
+matrixapikey = "API KEY GOES HERE"
+
+#Takes in a regatta dictionary and returns a tuple with the distance and time traveled.
+def distanceCalculator(dict, home):
+    #Get the orgin id, if it doesn't exist we can't do this operation
+    orgin = loc.get(home)
+    if orgin == False:
+        return (0, 0)
+    #Set an empty destinaton string
+    destination = ""
+    #For every regatta we try to get the id of each of their destinations.
+    for regatta in dict:
+        id = loc.get(dict[regatta]['location'])
+        if id == False:
+            continue
+        destination+=f"place_id:{id}|"
+    #If they had no valid destinations, then we return 0, 0
+    if destination == "":
+        return (0, 0)
+    #After we have all destination we can make a call to the GoogleMapsDistanceMatrixAPI
+    call = f"{matrixurl}origins=place_id:{orgin}&destinations={destination[:-1]}&key={matrixapikey}"
+    t = requests.get(call)
+    #Check if its sucsessful
+    if not t:
+        return None
+
+    #Load the response and tally all the results.
+    response = json.loads(t.text)
+    totalMeters = 0
+    totalSeconds = 0
+    for element in response['rows'][0]['elements']:
+        if element['duration']['value'] > 57600:
+            continue
+        totalMeters += element['distance']['value']
+        totalSeconds += element['duration']['value']
+    #Converting meters to miles and doubling for both directions
+    totalMeters *= 2
+    #Converting seconds to hours/minutes.
+    totalSeconds *= 2
+    return (totalMeters, totalSeconds)
+
 #This method takes in a sailors uuid and returns a dictionary with respective results.
 ## TODO: Add error handling for invalid sailors.
 def sailor_scrape(uuid):
@@ -84,6 +129,8 @@ def sailor_scrape(uuid):
     grad_year = None
     sailP = None
     averageF = None
+    m_traveled = 0
+    s_traveled = 0
     #Output method that makes forming a dictionary with all the information easy.
     def output():
         dict = {
@@ -94,6 +141,8 @@ def sailor_scrape(uuid):
         'grad_year':grad_year,
         'sail-percentage':sailP,
         'average-finish':averageF,
+        'meters-traveled':m_traveled,
+        'seconds-traveled':s_traveled,
         }
         return dict
 
@@ -136,4 +185,7 @@ def sailor_scrape(uuid):
     #Caculates regatta-dict based data.
     sailP = sailPercentage(regattaDict)
     averageF = averageFinish(regattaDict)
+    distance = distanceCalculator(regattaDict, home)
+    m_traveled = distance[0]
+    s_traveled = distance[1]
     return output()

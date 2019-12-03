@@ -39,9 +39,9 @@
             <div class="col-lg-10 offset-lg-2">
               <nav class="main_nav">
                 <ul class="d-flex flex-row align-items-center justify-content-start">
-                  <li ><a href="index.html">Home</a></li>
-                  <li ><a href="schools.html">Schools</a></li>
-                  <li ><a href="leaderboard.html">Leaderboard</a></li>
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="schools.html">Schools</a></li>
+                  <li><a href="leaderboard.html">Leaderboard</a></li>
                 </ul>
               </nav>
             </div>
@@ -115,10 +115,19 @@
           <td class="cellheader">Perentage Regattas Sailed</td>
           <td id="sailed"></td>
         </tr>
+        <tr>
+          <td class="cellheader">Time Traveled</td>
+          <td id="seconds"></td>
+        </tr>
+        <tr>
+          <td class="cellheader">Miles Traveled</td>
+          <td id="meters"></td>
+        </tr>
       </tbody>
     </table>
 
     <h class="tableheader">Regattas:</h>
+    <br><small class="ml-3">A green trendline indicates a positive trend, red a negative one.</small>
     <hr>
     <canvas id="myChart" height="100"></canvas>
 
@@ -250,6 +259,7 @@
 	 </script>
 	 
 
+
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0-rc.1/Chart.bundle.js"></script>
     <script src="js/chartjs-plugin-annotation.min.js"></script>
@@ -265,6 +275,19 @@
         });
         return output;
       }
+
+      //Useful function to convert seconds to hours/minutes.
+      //https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript
+      function secondsToHms(d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+
+        var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
+        return hDisplay + mDisplay
+      }
+
       $(document).ready(function() {
         //We get the html parameters
         params = {};
@@ -287,8 +310,11 @@
             $("#school").text(data['home']);
             $("#grad").text(data['grad_year']);
             $("#regattas").text(data['regatta_count']);
-            $("#finish").text(data['average_finish']);
-            $("#sailed").text(data['sail_percentage'] + "%");
+            $("#finish").text(data['average_finish'].toFixed(1));
+            $("#sailed").text(data['sail_percentage'].toFixed(1) + "%");
+            $("#seconds").text(secondsToHms(data['seconds_traveled']));
+            $("#meters").text((data['meters_traveled'] / 1609.344).toFixed(1) + " miles");
+
             //Make a array of regattas and an array of finishes to graph.
             regattaLabels = [];
             finish = [];
@@ -345,9 +371,9 @@
             //If their regression is getting better, we can pick one color, if it is getting worse we can pick another.
             //Right now they are the same color because I couldn't choose.
             if (lr['slope'] >= 0) {
-              lr['color'] = 'rgb(75, 119, 238)';
+              lr['color'] = 'red';
             } else {
-              lr['color'] = 'rgb(75, 119, 238)';
+              lr['color'] = 'green';
             }
             //We create a chart
             var ctx = $("#myChart");
@@ -360,7 +386,7 @@
                 datasets: [{
                   label: 'Regatta Finishes',
                   lineTension: 0,
-                  backgroundColor: 'rgb(156, 83, 240)',
+                  backgroundColor: 'rgb(113, 82, 243)',
                   data: finish,
                 }]
               },
