@@ -20,6 +20,8 @@
        $(icon).toggleClass('fa-star-o fa-star');
      }
    </script>
+
+
  </head>
 
  <body>
@@ -90,20 +92,27 @@
        </div>
      </div>
 
-     <!-- Milestones -->
 
      <!-- About -->
 
-     <div class="about">
-       <div class="container">
-         <div class="row row-lg-eq-height">
-           <ul id="schools">
-
-           </ul>
-
-         </div>
-         </div>
+     <div class="col-md-6">
+       <div class="w-95 mt-2">
+         <table class="table table-bordered table-hover" id='schools'>
+           <caption>Schools</caption>
+           <thead class='thead-dark'>
+             <tr>
+               <th scope='col'>Name</th>
+             </tr>
+           </thead>
+           <tbody>
+             <!-- Rows will populate here -->
+           </tbody>
+         </table>
        </div>
+     </div>
+
+
+
 
      </div>
    </div>
@@ -131,7 +140,7 @@
          success: function(data) {
            $.each(data, function(index, value) {
              school = '<span><a href="">' + value +  '</a></span>';
-             row = '<li><a href="team.html?team=' + encodeURIComponent(value) + '">' + value + '</a></li>';
+             row = '<tr><td><a href="team.html?team=' + encodeURIComponent(value) + '">' + value + '</a></td></tr>';
              $('#schools').append(row);
            })
          },
