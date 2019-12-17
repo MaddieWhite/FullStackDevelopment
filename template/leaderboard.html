@@ -217,7 +217,7 @@
 
         $.ajax({
           type: "GET",
-          url: "https://teqr5x3h2h.execute-api.us-east-1.amazonaws.com/dev/leaderboard",
+          url: "https://r9tzizlj97.execute-api.us-east-1.amazonaws.com/request/leaderboard",
           data: {
             column: column,
             count: count,
@@ -261,8 +261,8 @@
         var h = Math.floor(d / 3600);
         var m = Math.floor(d % 3600 / 60);
 
-        var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-        var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
+        var hDisplay = h > 0 ? h + (h == 1 ? " h, " : " h, ") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? " m" : " m") : "";
         return hDisplay + mDisplay
       }
 

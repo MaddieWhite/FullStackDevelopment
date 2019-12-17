@@ -16,13 +16,13 @@
   <link href="plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="styles/about.css">
   <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
-  
+
  	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
     <!--Cognito JavaScript-->
-   	<script src="js/amazon-cognito-identity.min.js"></script>  
+   	<script src="js/amazon-cognito-identity.min.js"></script>
    	<script src="js/config.js"></script>
-	
-	
+
+
 </head>
 
 <body>
@@ -131,17 +131,17 @@
     <hr>
     <canvas id="myChart" height="100"></canvas>
 
-			 
+
 		  <script>
-			  
-			function s(){  
-		 	var data = { 
+
+			function s(){
+		 	var data = {
 		 	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
 		 	        ClientId : '352g7qe1vat8ok0631n096c8gt',
 		     };
 		     var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
 		     var cognitoUser = userPool.getCurrentUser();
-	
+
 		 	window.onload = function(){
 		     if (cognitoUser != null) {
 		         cognitoUser.getSession(function(err, session) {
@@ -157,32 +157,32 @@
 		 					return;
 		 				}
 		 				console.log(result, JSON.stringify(result, null, 2));
-		 				//document.getElementById("email_value").innerHTML = result[2].getValue();	
+		 				//document.getElementById("email_value").innerHTML = result[2].getValue();
 						return JSON.stringify(result, null, 2);//result[2].getValue()
-		 			});			
-			
+		 			});
+
 		         });
 		     }
 		 }
 	 }
 		 	function signOut(){
 		 	    if (cognitoUser != null) {
-		           cognitoUser.signOut();	  
+		           cognitoUser.signOut();
 		         }
 		 	}
 
-			 
-			 
-			 
+
+
+
 		 function updateFav(){
-		 	var data = { 
+		 	var data = {
 		 	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
 		 	        ClientId : '352g7qe1vat8ok0631n096c8gt',
 		     };
 		     var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
 		     var cognitoUser = userPool.getCurrentUser();
-	
-			 
+
+
 		     if (cognitoUser != null) {
 		         cognitoUser.getSession(function(err, session) {
 		             if (err) {
@@ -197,9 +197,9 @@
 		 					return;
 		 				}
 		 				console.log(result);
-		 				//document.getElementById("email_value").innerHTML = result[2].getValue();	
-							 
-			 
+		 				//document.getElementById("email_value").innerHTML = result[2].getValue();
+
+
  		    AWS.config.update({
  		   //credentials: new AWS.CognitoIdentityCredentials({
  		 	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
@@ -208,11 +208,11 @@
  		   	region: "us-east-1",
  		   	endpoint: "dynamodb.us-east-1.amazonaws.com"
  			 });
-			 
-			 
- 	
+
+
+
 			var user = result[2].getValue();
-			//document.getElementById("email_value").innerHTML = result[2].getValue();	
+			//document.getElementById("email_value").innerHTML = result[2].getValue();
 			//return JSON.stringify(result, null, 2);//result[2].getValue()
 
  			 var table = "SailingScoresUserFavorites";
@@ -243,22 +243,22 @@
 			          console.log("Added item:", JSON.stringify(data, null, 2));
 			      }
 			  });
-		});			
-		
+		});
+
       });
   }
-			  
+
 			  }
 		 </script>
-	
-	
+
+
 	<script language="javascript">
 	 function star ( icon ) {
 	   updateFav();
 	   $(icon).toggleClass('fa-star-o fa-star');
 	 }
 	 </script>
-	 
+
 
 
     <script src="js/jquery-3.2.1.min.js"></script>
@@ -298,7 +298,7 @@
         //Begin our ajax request
         $.ajax({
           type: "GET",
-          url: "https://teqr5x3h2h.execute-api.us-east-1.amazonaws.com/dev/sailor-request",
+          url: "https://r9tzizlj97.execute-api.us-east-1.amazonaws.com/request/request",
           data: {
             uuid: params['uuid']
           },
