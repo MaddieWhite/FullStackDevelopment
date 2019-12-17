@@ -9,16 +9,20 @@ except pymysql.MySQLError as e:
 
 def lambda_handler(event, context):
     parameters = event['queryStringParameters']
-    return sailor_request(parameters['table'], parameters['column'])
+    return column_request(parameters['table'], parameters['column'], parameters['condition'])
 
-def column_request(table, column):
+def column_request(table, column, condition):
         #If we can't connect to the database we just return a 500.
     if not connection:
         return lambdareturn("Unable to connect to datebase", 500)
     with conn.cursor() as cur:
         #Retrive the sailors data already as json.
-        cur.execute(f"""SELECT JSON_ARRAYAGG({column}) FROM {table}""")
-        conn.commit()
+        if condition == "*":
+            cur.execute(f"""SELECT JSON_ARRAYAGG({column}) FROM {table}""")
+            conn.commit()
+        else:
+            cur.execute(f"""SELECT JSON_ARRAYAGG({column}) FROM {table} WHERE {condition}""")
+            conn.commit()
         try:
             response = json.loads(cur.fetchone()[0])
         except:
