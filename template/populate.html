@@ -132,7 +132,7 @@ $(document)
                 console.log(data);
                 $("#submit").prop("disabled", false);
                 $("#overlay").fadeOut(300);
-                $("#output").val("Roster: " + data['roster'] + "\n Output: \n" + data['body']);
+                $("#output").val("Roster: " + data['roster'] + "\n Output: \n" + data['response']);
               },
               error: function(data) {
                 $("#submit").prop("disabled", false);
