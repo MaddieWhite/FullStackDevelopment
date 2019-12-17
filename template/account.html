@@ -19,11 +19,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  
+
  <!--Cognito JavaScript-->
-	<script src="js/amazon-cognito-identity.min.js"></script>  
+	<script src="js/amazon-cognito-identity.min.js"></script>
 	<script src="js/config.js"></script>
-	
+
 	<style>div { padding: 3px;}</style>
 
    <style>
@@ -118,12 +118,12 @@
               <thead class='thead-dark'>
                 <tr>
                   <th scope='col'>Names</th>
-                 
+
                 </tr>
               </thead>
               <tbody id = "saved">
                 <!-- Rows will populate here -->
-				
+
               </tbody>
             </table>
           </div>
@@ -146,13 +146,13 @@
 
 
  <script>
-	var data = { 
+	var data = {
 	        UserPoolId : 'us-east-1_sUgRwS7Gw',//_config.cognito.userPoolId, // Your user pool id here
 	        ClientId : '352g7qe1vat8ok0631n096c8gt',
     };
     var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
     var cognitoUser = userPool.getCurrentUser();
-	
+
 	window.onload = function(){
     if (cognitoUser != null) {
         cognitoUser.getSession(function(err, session) {
@@ -168,9 +168,9 @@
 					return;
 				}
 				console.log(result);
-				document.getElementById("email_value").innerHTML = result[2].getValue();	
-				
-	
+				document.getElementById("email_value").innerHTML = result[2].getValue();
+
+
 			    AWS.config.update({
 			      //credentials: new AWS.CognitoIdentityCredentials({
 			    	//    IdentityPoolId: 'us-east-1:ac5f5a22-5162-4766-93c2-43b34f968db4'}),
@@ -193,7 +193,7 @@
 			   	};
 				//var tableDescription = dynamoDB.getTable(table).describe().getItemCount();
 				var i;
-				
+
 			   	ddb.getItem(params, function(err, data) {
 			   	  if (err) {
 			   	    console.log("Error", err);
@@ -204,21 +204,21 @@
 				   for (i=0; i< data.Item.Fav.L.length;i++){
 				   var str = data.Item.Fav.L[i].S;
 				   var res = str.split(" ");
-				   
-				   var result = str.link("http://sailingsite.s3-website-us-east-1.amazonaws.com/sailor.html?uuid=" + res[0]+"-"+res[1]);
+
+				   var result = str.link("sailor.html?uuid=" + res[0]+"-"+res[1]);
 				   h.insertAdjacentHTML("afterend","<br>"+result+"</br>");
 			     }
 			 }
 			   	});
-  
-			});			
-			
+
+			});
+
         });
     }
 }
 	function signOut(){
 	    if (cognitoUser != null) {
-          cognitoUser.signOut();	  
+          cognitoUser.signOut();
         }
 	}
     </script>
