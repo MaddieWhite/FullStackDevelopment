@@ -17,12 +17,12 @@ def sailor_request(column, count, op):
         return lambdareturn("Unable to connect to datebase", 500)
     with conn.cursor() as cur:
         if op.lower() == "desc":
-            command  = f"""SELECT * FROM sailors ORDER BY {column} DESC LIMIT {count}"""
+            command  = f"""SELECT * FROM sailors WHERE regatta_count >= 10 ORDER BY {column} DESC LIMIT {count}"""
             cur.execute(command)
             conn.commit()
             leaderboard = cur.fetchall()
         else:
-            command = f"""SELECT * FROM sailors ORDER BY -{column} DESC LIMIT {count}"""
+            command = f"""SELECT * FROM sailors WHERE regatta_count >= 10 ORDER BY -{column} DESC LIMIT {count}"""
             cur.execute(command)
             conn.commit()
             leaderboard = cur.fetchall()
